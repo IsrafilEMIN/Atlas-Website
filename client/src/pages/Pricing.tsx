@@ -23,9 +23,9 @@ export default function Pricing() {
       interior: { standard: 3.5, premium: 5, luxury: 7 },
       exterior: { standard: 4, premium: 6, luxury: 8 },
       commercial: { standard: 4.5, premium: 6.5, luxury: 9 }
-    };
+    } as const;
 
-    const baseRate = rates[serviceType][paintQuality];
+    const baseRate = rates[serviceType as keyof typeof rates][paintQuality as 'standard' | 'premium' | 'luxury'];
     const basePrice = sqft * baseRate;
     const roomComplexityFactor = numRooms * 100; // Additional cost per room for prep work
 
@@ -88,7 +88,7 @@ export default function Pricing() {
                       id="service"
                       value={serviceType}
                       onChange={(e) => setServiceType(e.target.value)}
-                      className="w-full px-3 py-2 bg-white/10 border border-gray-700 rounded-md text-white"
+                      className="w-full px-3 py-2 bg-white/10 border border-gray-700 rounded-md text-white [&>option]:bg-gray-800 [&>option]:text-white"
                     >
                       <option value="interior">Interior Painting</option>
                       <option value="exterior">Exterior Painting</option>
@@ -101,7 +101,7 @@ export default function Pricing() {
                       id="quality"
                       value={paintQuality}
                       onChange={(e) => setPaintQuality(e.target.value)}
-                      className="w-full px-3 py-2 bg-white/10 border border-gray-700 rounded-md text-white"
+                      className="w-full px-3 py-2 bg-white/10 border border-gray-700 rounded-md text-white [&>option]:bg-gray-800 [&>option]:text-white"
                     >
                       <option value="standard">Standard</option>
                       <option value="premium">Premium</option>
