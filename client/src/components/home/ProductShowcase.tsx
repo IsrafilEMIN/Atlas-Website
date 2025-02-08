@@ -9,9 +9,9 @@ export default function ProductShowcase() {
   });
 
   return (
-    <section ref={ref} className="relative py-24 bg-black overflow-hidden">
-      <WavePattern />
-      
+    <section ref={ref} className="relative py-24 bg-gray-50 overflow-hidden">
+      <WavePattern className="text-white/5" />
+
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -19,11 +19,11 @@ export default function ProductShowcase() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Built for Modern Enterprises
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Our Recent Projects
           </h2>
-          <p className="text-gray-400 text-lg">
-            Experience a new way of working with our intuitive interface and powerful features.
+          <p className="text-gray-600 text-lg">
+            Take a look at some of our finest work that showcases our attention to detail and commitment to quality.
           </p>
         </motion.div>
 
@@ -33,23 +33,32 @@ export default function ProductShowcase() {
           transition={{ duration: 0.8 }}
           className="relative mx-auto max-w-5xl"
         >
-          <div className="aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-8 backdrop-blur-xl border border-gray-800">
-            <svg
-              viewBox="0 0 800 500"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-            >
-              {/* Simplified UI wireframe */}
-              <rect x="40" y="40" width="720" height="60" rx="8" fill="rgba(255,255,255,0.1)" />
-              <rect x="60" y="55" width="120" height="30" rx="4" fill="rgba(255,255,255,0.2)" />
-              <rect x="40" y="120" width="300" height="340" rx="8" fill="rgba(255,255,255,0.1)" />
-              <rect x="360" y="120" width="400" height="340" rx="8" fill="rgba(255,255,255,0.1)" />
-              {/* Add more UI elements as needed */}
-            </svg>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Project Cards */}
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="aspect-video bg-gray-100" />
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Modern Home Interior</h3>
+                <p className="text-gray-600">Complete interior renovation with premium finish</p>
+              </div>
+            </div>
 
-          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] h-[10%] bg-gradient-to-b from-purple-500/20 to-transparent blur-2xl" />
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="aspect-video bg-gray-100" />
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Commercial Office Space</h3>
+                <p className="text-gray-600">Professional painting solution for corporate environment</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="aspect-video bg-gray-100" />
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Exterior Transformation</h3>
+                <p className="text-gray-600">Complete exterior makeover with weather-resistant coating</p>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
