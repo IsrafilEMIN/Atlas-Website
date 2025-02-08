@@ -8,6 +8,7 @@ import Services from "@/pages/Services";
 import Gallery from "@/pages/Gallery";
 import Contact from "@/pages/Contact";
 import Booking from "@/pages/Booking";
+import Pricing from "@/pages/Pricing";
 import Header from "@/components/layout/Header";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
         <Route path="/gallery" component={Gallery} />
         <Route path="/contact" component={Contact} />
         <Route path="/booking" component={Booking} />
+        <Route path="/pricing" component={Pricing} />
         <Route component={NotFound} />
       </Switch>
     </>
