@@ -35,7 +35,7 @@ export default function Pricing() {
   const estimate = calculateEstimate();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black">
+    <div className="min-h-screen bg-white">
       <Header />
       <div className="relative pt-20">
         <WavePattern />
@@ -47,48 +47,48 @@ export default function Pricing() {
             transition={{ duration: 0.8 }}
             className="max-w-3xl mx-auto text-center mb-16"
           >
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">Project Cost Calculator</h1>
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
+            <h1 className="text-4xl font-bold text-gray-900 mb-6">Project Cost Calculator</h1>
+            <p className="text-gray-600 text-lg">
               Get an instant estimate for your painting project
             </p>
           </motion.div>
 
           <div className="max-w-2xl mx-auto">
-            <Card className="p-6 bg-white dark:bg-black/50 backdrop-blur-lg border-gray-200 dark:border-gray-800">
+            <Card className="p-6 bg-white shadow-lg border border-gray-200">
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="sqft" className="text-gray-700 dark:text-white">Square Footage</Label>
+                    <Label htmlFor="sqft" className="text-gray-700">Square Footage</Label>
                     <Input
                       id="sqft"
                       type="number"
                       placeholder="Enter total square feet"
                       value={squareFeet}
                       onChange={(e) => setSquareFeet(e.target.value)}
-                      className="bg-white dark:bg-white/10 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white"
+                      className="bg-white border-gray-300 text-gray-900"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="rooms" className="text-gray-700 dark:text-white">Number of Rooms</Label>
+                    <Label htmlFor="rooms" className="text-gray-700">Number of Rooms</Label>
                     <Input
                       id="rooms"
                       type="number"
                       placeholder="Number of rooms"
                       value={rooms}
                       onChange={(e) => setRooms(e.target.value)}
-                      className="bg-white dark:bg-white/10 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white"
+                      className="bg-white border-gray-300 text-gray-900"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="service" className="text-gray-700 dark:text-white">Service Type</Label>
+                    <Label htmlFor="service" className="text-gray-700">Service Type</Label>
                     <select
                       id="service"
                       value={serviceType}
                       onChange={(e) => setServiceType(e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-white/10 border border-gray-300 dark:border-gray-700 rounded-md text-gray-900 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900"
                     >
                       <option value="interior">Interior Painting</option>
                       <option value="exterior">Exterior Painting</option>
@@ -96,12 +96,12 @@ export default function Pricing() {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="quality" className="text-gray-700 dark:text-white">Paint Quality</Label>
+                    <Label htmlFor="quality" className="text-gray-700">Paint Quality</Label>
                     <select
                       id="quality"
                       value={paintQuality}
                       onChange={(e) => setPaintQuality(e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-white/10 border border-gray-300 dark:border-gray-700 rounded-md text-gray-900 dark:text-white [&>option]:bg-white [&>option]:dark:bg-gray-800 [&>option]:text-gray-900 [&>option]:dark:text-white"
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-900"
                     >
                       <option value="standard">Standard</option>
                       <option value="premium">Premium</option>
@@ -110,16 +110,16 @@ export default function Pricing() {
                   </div>
                 </div>
 
-                <div className="mt-8 p-6 bg-gray-50 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-gray-700">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Estimated Cost</h3>
-                  <p className="text-3xl font-bold text-gray-900 dark:text-white">${estimate.toFixed(2)}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                <div className="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Estimated Cost</h3>
+                  <p className="text-3xl font-bold text-gray-900">${estimate.toFixed(2)}</p>
+                  <p className="text-sm text-gray-500 mt-2">
                     This is a rough estimate. Final price may vary based on project specifics.
                   </p>
                 </div>
 
                 <Button 
-                  className="w-full bg-primary text-white dark:bg-white dark:text-black hover:bg-primary/90 dark:hover:bg-gray-100"
+                  className="w-full bg-primary text-white hover:bg-primary/90"
                   onClick={() => window.location.href = '/booking'}
                 >
                   Schedule a Consultation
