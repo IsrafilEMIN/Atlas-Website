@@ -8,7 +8,7 @@ export default function Header() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
-    ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.8)"]
+    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.8)"]
   );
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
@@ -27,12 +27,12 @@ export default function Header() {
     <motion.header
       style={{ backgroundColor }}
       className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
-        isScrolled ? "py-4" : "py-6"
+        isScrolled ? "py-4 border-b border-gray-200" : "py-6"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/">
-          <span className="text-2xl font-bold text-white cursor-pointer">
+          <span className="text-2xl font-bold text-gray-900 cursor-pointer">
             Premium<span className="text-primary">Paint</span>
           </span>
         </Link>
@@ -40,28 +40,28 @@ export default function Header() {
         <nav className="hidden md:flex items-center space-x-8">
           <Link href="/services">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/services") ? "text-white" : "text-gray-300 hover:text-white"
+              isActive("/services") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
             }`}>
               Services
             </span>
           </Link>
           <Link href="/pricing">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/pricing") ? "text-white" : "text-gray-300 hover:text-white"
+              isActive("/pricing") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
             }`}>
               Pricing
             </span>
           </Link>
           <Link href="/gallery">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/gallery") ? "text-white" : "text-gray-300 hover:text-white"
+              isActive("/gallery") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
             }`}>
               Gallery
             </span>
           </Link>
           <Link href="/contact">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/contact") ? "text-white" : "text-gray-300 hover:text-white"
+              isActive("/contact") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
             }`}>
               Contact
             </span>
@@ -69,7 +69,7 @@ export default function Header() {
         </nav>
 
         <Link href="/booking">
-          <Button variant="secondary" className="bg-white text-black hover:bg-gray-100">
+          <Button variant="default" className="bg-primary text-white hover:bg-primary/90">
             Book Now
           </Button>
         </Link>
