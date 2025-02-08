@@ -33,37 +33,39 @@ export default function Header() {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/">
           <span className="text-2xl font-bold text-white cursor-pointer">
-            SaaS<span className="text-primary">Hub</span>
+            Premium<span className="text-primary">Paint</span>
           </span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
-          <Link href="/resources">
+          <Link href="/services">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/resources") ? "text-white" : "text-gray-300 hover:text-white"
+              isActive("/services") ? "text-white" : "text-gray-300 hover:text-white"
             }`}>
-              Resources
+              Services
             </span>
           </Link>
-          <Link href="/pricing">
+          <Link href="/gallery">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/pricing") ? "text-white" : "text-gray-300 hover:text-white"
+              isActive("/gallery") ? "text-white" : "text-gray-300 hover:text-white"
             }`}>
-              Pricing
+              Gallery
             </span>
           </Link>
-          <Link href="/blog">
+          <Link href="/contact">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/blog") ? "text-white" : "text-gray-300 hover:text-white"
+              isActive("/contact") ? "text-white" : "text-gray-300 hover:text-white"
             }`}>
-              Blog
+              Contact
             </span>
           </Link>
         </nav>
 
-        <Button variant="secondary" className="bg-white text-black hover:bg-gray-100">
-          Get Started
-        </Button>
+        <Link href="/booking">
+          <Button variant="secondary" className="bg-white text-black hover:bg-gray-100">
+            Book Now
+          </Button>
+        </Link>
       </div>
     </motion.header>
   );
