@@ -57,7 +57,7 @@ export default function Hero() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-primary text-primary hover:bg-primary hover:text-white"
+              className="border-white text-white hover:bg-white/10 bg-primary/90"
               onClick={() => window.location.href = '/services'}
             >
               Our Services
