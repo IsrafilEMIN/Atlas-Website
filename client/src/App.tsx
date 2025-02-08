@@ -10,21 +10,25 @@ import Contact from "@/pages/Contact";
 import Booking from "@/pages/Booking";
 import Pricing from "@/pages/Pricing";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 function Router() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/services" component={Services} />
-        <Route path="/gallery" component={Gallery} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/booking" component={Booking} />
-        <Route path="/pricing" component={Pricing} />
-        <Route component={NotFound} />
-      </Switch>
-    </>
+      <div className="flex-grow">
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/services" component={Services} />
+          <Route path="/gallery" component={Gallery} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/booking" component={Booking} />
+          <Route path="/pricing" component={Pricing} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+      <Footer />
+    </div>
   );
 }
 
