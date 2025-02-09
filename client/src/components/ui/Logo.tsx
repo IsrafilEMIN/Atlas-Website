@@ -7,7 +7,7 @@ export default function Logo() {
     <div className="flex items-center">
       {!imageError && (
         <img 
-          src="/assets/2.png"
+          src="/assets/3.PNG"
           alt="Atlas HomeServices Logo" 
           className="h-12 w-auto"
           style={{ 
