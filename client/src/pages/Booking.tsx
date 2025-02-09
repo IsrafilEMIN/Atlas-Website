@@ -44,25 +44,33 @@ export default function Booking() {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Calendar Section */}
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-              <h2 className="text-xl font-semibold mb-4">Select Date & Time</h2>
+            <div className="bg-gray-900 p-6 rounded-lg border border-gray-700">
+              <h2 className="text-xl font-semibold mb-4 text-white">Select Date & Time</h2>
               <Calendar
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-md border"
+                className="rounded-md border bg-gray-900 text-white"
+                classNames={{
+                  day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                  day: "text-white hover:bg-gray-800",
+                  day_disabled: "text-gray-500",
+                  head_cell: "text-gray-300",
+                  nav_button: "text-gray-300 hover:bg-gray-800",
+                  caption: "text-gray-300",
+                }}
               />
 
               {date && (
                 <div className="mt-4">
-                  <h3 className="text-sm font-medium mb-2">Available Time Slots</h3>
+                  <h3 className="text-sm font-medium mb-2 text-white">Available Time Slots</h3>
                   <div className="grid grid-cols-2 gap-2">
                     {["9:00 AM", "10:00 AM", "2:00 PM", "3:00 PM"].map((time) => (
                       <Button
                         key={time}
                         variant={timeSlot === time ? "default" : "outline"}
                         onClick={() => setTimeSlot(time)}
-                        className="w-full"
+                        className={`w-full ${timeSlot === time ? 'bg-primary text-white' : 'text-white border-gray-600 hover:bg-gray-800'}`}
                       >
                         {time}
                       </Button>
@@ -80,14 +88,14 @@ export default function Booking() {
                   name="serviceType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Service Type</FormLabel>
+                      <FormLabel className="text-gray-900">Service Type</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="bg-white text-gray-900 border-gray-300">
                             <SelectValue placeholder="Select a service" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
+                        <SelectContent className="bg-white text-gray-900">
                           <SelectItem value="residential">Residential Painting</SelectItem>
                           <SelectItem value="commercial">Commercial Painting</SelectItem>
                           <SelectItem value="exterior">Exterior Painting</SelectItem>
@@ -103,9 +111,9 @@ export default function Booking() {
                   name="customerName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel className="text-gray-900">Full Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="John Doe" {...field} />
+                        <Input placeholder="John Doe" {...field} className="bg-white text-gray-900 border-gray-300" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -117,9 +125,9 @@ export default function Booking() {
                   name="customerEmail"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="text-gray-900">Email</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="you@example.com" {...field} />
+                        <Input type="email" placeholder="you@example.com" {...field} className="bg-white text-gray-900 border-gray-300" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -131,9 +139,9 @@ export default function Booking() {
                   name="customerPhone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
+                      <FormLabel className="text-gray-900">Phone Number</FormLabel>
                       <FormControl>
-                        <Input type="tel" placeholder="(555) 123-4567" {...field} />
+                        <Input type="tel" placeholder="(555) 123-4567" {...field} className="bg-white text-gray-900 border-gray-300" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -145,11 +153,11 @@ export default function Booking() {
                   name="projectDetails"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Project Details</FormLabel>
+                      <FormLabel className="text-gray-900">Project Details</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Please describe your project (size, current condition, special requirements, etc.)"
-                          className="h-32"
+                          className="h-32 bg-white text-gray-900 border-gray-300"
                           {...field}
                         />
                       </FormControl>
