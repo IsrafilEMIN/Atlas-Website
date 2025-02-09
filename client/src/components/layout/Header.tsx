@@ -24,9 +24,9 @@ export default function Header() {
 
   const isActive = (path: string) => location === path;
 
-  // Navigation link styling - made consistent for all items
+  // Navigation link styling - updated with SF Pro font and smaller text
   const linkStyle = (path: string) => 
-    `cursor-pointer transition-colors duration-200 text-lg font-medium ${
+    `cursor-pointer transition-colors duration-200 text-base font-medium font-['SF Pro Display',-apple-system,BlinkMacSystemFont,system-ui,sans-serif] ${
       isActive(path) 
         ? "text-white" // Active state
         : "text-gray-300 hover:text-white" // Inactive state

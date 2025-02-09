@@ -10,7 +10,7 @@ export default function Logo() {
         alt="Atlas HomeServices Logo" 
         className="h-12 w-auto"
         style={{ 
-          minWidth: '160px',
+          minWidth: '128px', 
           filter: 'brightness(0) invert(1)',
           opacity: 1
         }}
