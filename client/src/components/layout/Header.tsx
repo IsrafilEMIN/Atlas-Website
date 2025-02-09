@@ -9,7 +9,7 @@ export default function Header() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.8)"]
+    ["rgb(0, 0, 0)", "rgba(0, 0, 0, 0.9)"]
   );
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
@@ -28,7 +28,7 @@ export default function Header() {
     <motion.header
       style={{ backgroundColor }}
       className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
-        isScrolled ? "py-4 border-b border-gray-200" : "py-6"
+        isScrolled ? "py-4 border-b border-gray-800" : "py-6"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -41,28 +41,28 @@ export default function Header() {
         <nav className="hidden md:flex items-center space-x-8">
           <Link href="/services">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/services") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
+              isActive("/services") ? "text-white font-medium" : "text-gray-300 hover:text-white"
             }`}>
               Services
             </span>
           </Link>
           <Link href="/pricing">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/pricing") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
+              isActive("/pricing") ? "text-white font-medium" : "text-gray-300 hover:text-white"
             }`}>
               Pricing
             </span>
           </Link>
           <Link href="/gallery">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/gallery") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
+              isActive("/gallery") ? "text-white font-medium" : "text-gray-300 hover:text-white"
             }`}>
               Gallery
             </span>
           </Link>
           <Link href="/contact">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/contact") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
+              isActive("/contact") ? "text-white font-medium" : "text-gray-300 hover:text-white"
             }`}>
               Contact
             </span>
@@ -70,7 +70,7 @@ export default function Header() {
         </nav>
 
         <Link href="/booking">
-          <Button variant="default" className="bg-primary text-white hover:bg-primary/90">
+          <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black">
             Book Now
           </Button>
         </Link>
