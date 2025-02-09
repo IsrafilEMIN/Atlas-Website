@@ -110,7 +110,11 @@ export default function Booking() {
                             <SelectValue placeholder="Select a service" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent className="bg-white text-gray-900">
+                        <SelectContent 
+                          className="bg-white text-gray-900" 
+                          position="popper"
+                          sideOffset={4}
+                        >
                           <SelectItem value="residential">Residential Painting</SelectItem>
                           <SelectItem value="commercial">Commercial Painting</SelectItem>
                           <SelectItem value="exterior">Exterior Painting</SelectItem>
