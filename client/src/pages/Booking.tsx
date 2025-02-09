@@ -109,7 +109,7 @@ export default function Booking() {
                 <div className="mt-4">
                   <h3 className="text-sm font-medium mb-2 text-gray-900">Available Time Slots</h3>
                   <div className="grid grid-cols-2 gap-2">
-                    {Array.from({ length: 25 }, (_, i) => {
+                    {Array.from({ length: 24 }, (_, i) => {
                       const hour = Math.floor(i / 2) + 8;
                       const minute = i % 2 === 0 ? '00' : '30';
                       const ampm = hour >= 12 ? 'PM' : 'AM';

@@ -15,14 +15,6 @@ export function registerRoutes(app: Express): Server {
         content: `New booking from ${booking.customerName} for ${booking.serviceType} on ${booking.date}`
       });
 
-      // Send SMS notification
-      await storage.insertNotification({
-        bookingId: booking.id,
-        type: 'sms',
-        status: 'pending',
-        content: `Booking confirmed: ${booking.serviceType} on ${booking.date}`
-      });
-
       res.json({ success: true, booking });
     } catch (error) {
       console.error('Booking error:', error);
