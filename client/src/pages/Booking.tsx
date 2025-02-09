@@ -111,9 +111,10 @@ export default function Booking() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent 
-                          className="bg-white text-gray-900" 
+                          className="bg-white text-gray-900 w-[var(--radix-select-trigger-width)]" 
                           position="popper"
                           sideOffset={4}
+                          align="start"
                         >
                           <SelectItem value="residential">Residential Painting</SelectItem>
                           <SelectItem value="commercial">Commercial Painting</SelectItem>
