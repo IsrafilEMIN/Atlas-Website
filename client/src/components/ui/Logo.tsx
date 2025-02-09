@@ -6,7 +6,7 @@ export default function Logo() {
       <img 
         src="/assets/2.png" 
         alt="Atlas HomeServices Logo" 
-        className="h-14 w-auto"
+        className="h-16 w-auto"
       />
     </div>
   );
