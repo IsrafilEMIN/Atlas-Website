@@ -43,36 +43,27 @@ export default function Booking() {
 
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Calendar Section */}
+            {/* Calendar Section - Styles updated for proper containment */}
             <div className="bg-white p-6 rounded-lg border border-gray-200">
               <h2 className="text-xl font-semibold mb-4 text-gray-900">Select Date & Time</h2>
               <Calendar
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-md border bg-white p-3"
+                className="rounded-md border"
                 classNames={{
-                  day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                  day: "text-gray-900 hover:bg-gray-100",
-                  day_disabled: "text-gray-400",
-                  head_cell: "text-gray-600",
-                  nav_button: "text-gray-600 hover:bg-gray-100",
-                  caption: "text-gray-900",
-                  nav: "space-x-1 flex items-center",
-                  nav_button_previous: "absolute left-1",
-                  nav_button_next: "absolute right-1",
+                  root: "relative",
+                  nav: "relative flex items-center justify-between px-2",
+                  nav_button_previous: "absolute left-1 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+                  nav_button_next: "absolute right-1 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
                   head_row: "flex",
-                  head_cell: "text-gray-600 rounded-md w-9 font-normal text-[0.8rem]",
                   row: "flex w-full mt-2",
-                  cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                  day: "h-9 w-9 p-0 font-normal",
-                  day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                  cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                  day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
                   day_today: "bg-accent text-accent-foreground",
-                  day_outside: "text-gray-400 opacity-50",
-                  day_disabled: "text-gray-400 opacity-50",
-                  day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                  day_outside: "text-muted-foreground opacity-50",
+                  day_disabled: "text-muted-foreground opacity-50",
                   day_hidden: "invisible",
-                  root: "relative"
                 }}
               />
 
@@ -95,7 +86,7 @@ export default function Booking() {
               )}
             </div>
 
-            {/* Booking Form */}
+            {/* Booking Form - Updated Select component styling */}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
@@ -106,16 +97,13 @@ export default function Booking() {
                       <FormLabel className="text-gray-900">Service Type</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger className="bg-white text-gray-900 border-gray-300">
+                          <SelectTrigger className="bg-white text-gray-900 border-gray-300 w-full">
                             <SelectValue placeholder="Select a service" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent 
-                          className="bg-white text-gray-900 w-[var(--radix-select-trigger-width)]" 
-                          position="popper"
-                          sideOffset={4}
-                          align="start"
-                          avoidCollisions={false}
+                          className="bg-white text-gray-900"
+                          position="item-aligned"
                         >
                           <SelectItem value="residential">Residential Painting</SelectItem>
                           <SelectItem value="commercial">Commercial Painting</SelectItem>
