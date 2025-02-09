@@ -40,28 +40,28 @@ export default function Header() {
         <nav className="hidden md:flex items-center space-x-8">
           <Link href="/services">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/services") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
+              isActive("/services") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
             }`}>
               Services
             </span>
           </Link>
           <Link href="/pricing">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/pricing") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
+              isActive("/pricing") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
             }`}>
               Pricing
             </span>
           </Link>
           <Link href="/gallery">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/gallery") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
+              isActive("/gallery") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
             }`}>
               Gallery
             </span>
           </Link>
           <Link href="/contact">
             <span className={`cursor-pointer transition-colors ${
-              isActive("/contact") ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
+              isActive("/contact") ? "text-gray-900 font-medium" : "text-gray-800 hover:text-gray-900"
             }`}>
               Contact
             </span>
