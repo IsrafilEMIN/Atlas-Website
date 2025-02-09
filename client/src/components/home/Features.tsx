@@ -33,15 +33,15 @@ export default function Features() {
   });
 
   return (
-    <section ref={ref} className="py-24 bg-primary text-primary-foreground">
+    <section ref={ref} className="py-24 bg-gray-50">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl font-bold text-primary-foreground mb-4">Why Choose Us</h2>
-          <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose Us</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
             Experience the difference with our premium painting services
           </p>
         </motion.div>
