@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Premium<span className="text-primary">Paint</span>
+              Atlas<span className="text-primary">HomeServices</span>
             </h3>
             <p className="text-gray-600 mb-4">
               Professional painting services for residential and commercial properties.
@@ -64,7 +64,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center text-gray-600">
                 <Mail className="w-5 h-5 mr-2" />
-                <span>info@premiumpaint.com</span>
+                <span>info@atlashomeservices.com</span>
               </li>
               <li className="flex items-center text-gray-600">
                 <MapPin className="w-5 h-5 mr-2" />
@@ -86,7 +86,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-200 mt-12 pt-8">
           <p className="text-center text-gray-600">
-            © {new Date().getFullYear()} PremiumPaint. All rights reserved.
+            © {new Date().getFullYear()} Atlas HomeServices. All rights reserved.
           </p>
         </div>
       </div>

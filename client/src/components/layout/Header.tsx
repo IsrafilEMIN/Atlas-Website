@@ -33,7 +33,7 @@ export default function Header() {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/">
           <span className="text-2xl font-bold text-gray-900 cursor-pointer">
-            Premium<span className="text-primary">Paint</span>
+            Atlas<span className="text-primary">HomeServices</span>
           </span>
         </Link>
 
