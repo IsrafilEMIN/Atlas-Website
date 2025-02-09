@@ -9,7 +9,7 @@ export default function Header() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
-    ["rgba(0, 0, 0, 0.9)", "rgba(0, 0, 0, 0.95)"]  // Changed to darker values
+    ["rgba(0, 0, 0, 1)", "rgba(0, 0, 0, 1)"]  // Set to solid black
   );
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
@@ -35,7 +35,7 @@ export default function Header() {
   return (
     <motion.header
       style={{ backgroundColor }}
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-black transition-all duration-300 ${
         isScrolled ? "py-2 border-b border-gray-800/50" : "py-3"
       }`}
     >
