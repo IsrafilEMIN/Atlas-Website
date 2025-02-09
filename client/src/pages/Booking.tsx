@@ -51,15 +51,14 @@ export default function Booking() {
                 onSelect={setDate}
                 className="rounded-md border"
                 showOutsideDays={false}
-                captionLayout="dropdown-buttons"
                 fromYear={2024}
                 toYear={2025}
                 classNames={{
                   root: "w-full",
                   months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
                   month: "space-y-4",
-                  caption: "flex justify-center pt-1 relative items-center gap-1",
-                  caption_label: "text-sm font-medium text-gray-900",
+                  caption: "flex justify-center pt-1 relative items-center",
+                  caption_label: "text-sm font-medium text-gray-900 hover:bg-gray-100 rounded-md px-2 py-1 cursor-pointer",
                   nav: "space-x-1 flex items-center",
                   nav_button: "h-7 w-7 bg-transparent p-0 text-gray-900 hover:bg-gray-100 rounded-md",
                   nav_button_previous: "absolute left-1",
@@ -74,12 +73,7 @@ export default function Booking() {
                   day_outside: "text-gray-500 opacity-50",
                   day_disabled: "text-gray-500 opacity-50",
                   day_range_middle: "aria-selected:bg-gray-100 aria-selected:text-gray-900",
-                  day_hidden: "invisible",
-                  caption_dropdowns: "flex gap-2 text-gray-900",
-                  dropdown: "relative z-10",
-                  dropdown_button: "px-2 py-1 text-sm rounded-md border border-gray-300 hover:bg-gray-100",
-                  dropdown_content: "absolute mt-1 bg-white border border-gray-300 rounded-md shadow-md z-50",
-                  dropdown_item: "px-2 py-1 text-sm hover:bg-gray-100 cursor-pointer"
+                  day_hidden: "invisible"
                 }}
               />
 
