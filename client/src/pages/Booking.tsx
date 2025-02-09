@@ -50,7 +50,7 @@ export default function Booking() {
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-md border bg-white"
+                className="rounded-md border bg-white p-3"
                 classNames={{
                   day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
                   day: "text-gray-900 hover:bg-gray-100",
@@ -58,6 +58,21 @@ export default function Booking() {
                   head_cell: "text-gray-600",
                   nav_button: "text-gray-600 hover:bg-gray-100",
                   caption: "text-gray-900",
+                  nav: "space-x-1 flex items-center",
+                  nav_button_previous: "absolute left-1",
+                  nav_button_next: "absolute right-1",
+                  head_row: "flex",
+                  head_cell: "text-gray-600 rounded-md w-9 font-normal text-[0.8rem]",
+                  row: "flex w-full mt-2",
+                  cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                  day: "h-9 w-9 p-0 font-normal",
+                  day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                  day_today: "bg-accent text-accent-foreground",
+                  day_outside: "text-gray-400 opacity-50",
+                  day_disabled: "text-gray-400 opacity-50",
+                  day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                  day_hidden: "invisible",
+                  root: "relative"
                 }}
               />
 
@@ -166,8 +181,8 @@ export default function Booking() {
                   )}
                 />
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full"
                   disabled={!date || !timeSlot}
                 >
