@@ -34,11 +34,18 @@ export default function Header() {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/">
           <a className="cursor-pointer">
-            <Logo />
+            <Logo className="w-24 h-24" /> {/* Added larger logo class */}
           </a>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
+          <Link href="/">
+            <span className={`cursor-pointer transition-colors ${
+              isActive("/") ? "text-white font-medium" : "text-gray-300 hover:text-white"
+            }`}>
+              Home
+            </span>
+          </Link>
           <Link href="/services">
             <span className={`cursor-pointer transition-colors ${
               isActive("/services") ? "text-white font-medium" : "text-gray-300 hover:text-white"
