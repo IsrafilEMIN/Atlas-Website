@@ -44,33 +44,33 @@ export default function Booking() {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Calendar Section */}
-            <div className="bg-gray-900 p-6 rounded-lg border border-gray-700">
-              <h2 className="text-xl font-semibold mb-4 text-white">Select Date & Time</h2>
+            <div className="bg-white p-6 rounded-lg border border-gray-200">
+              <h2 className="text-xl font-semibold mb-4 text-gray-900">Select Date & Time</h2>
               <Calendar
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-md border bg-gray-900 text-white"
+                className="rounded-md border bg-white"
                 classNames={{
                   day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                  day: "text-white hover:bg-gray-800",
-                  day_disabled: "text-gray-500",
-                  head_cell: "text-gray-300",
-                  nav_button: "text-gray-300 hover:bg-gray-800",
-                  caption: "text-gray-300",
+                  day: "text-gray-900 hover:bg-gray-100",
+                  day_disabled: "text-gray-400",
+                  head_cell: "text-gray-600",
+                  nav_button: "text-gray-600 hover:bg-gray-100",
+                  caption: "text-gray-900",
                 }}
               />
 
               {date && (
                 <div className="mt-4">
-                  <h3 className="text-sm font-medium mb-2 text-white">Available Time Slots</h3>
+                  <h3 className="text-sm font-medium mb-2 text-gray-900">Available Time Slots</h3>
                   <div className="grid grid-cols-2 gap-2">
                     {["9:00 AM", "10:00 AM", "2:00 PM", "3:00 PM"].map((time) => (
                       <Button
                         key={time}
                         variant={timeSlot === time ? "default" : "outline"}
                         onClick={() => setTimeSlot(time)}
-                        className={`w-full ${timeSlot === time ? 'bg-primary text-white' : 'text-white border-gray-600 hover:bg-gray-800'}`}
+                        className={`w-full ${timeSlot === time ? 'bg-primary text-white' : 'text-gray-900 border-gray-300 hover:bg-gray-100'}`}
                       >
                         {time}
                       </Button>
