@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import Logo from "@/components/ui/Logo";
 
 export default function Footer() {
   return (
@@ -8,9 +9,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Atlas<span className="text-primary">HomeServices</span>
-            </h3>
+            <div className="mb-4">
+              <Logo />
+            </div>
             <p className="text-gray-600 mb-4">
               Professional painting services for residential and commercial properties.
             </p>

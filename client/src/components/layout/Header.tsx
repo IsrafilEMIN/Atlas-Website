@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Logo from "@/components/ui/Logo";
 
 export default function Header() {
   const { scrollY } = useScroll();
@@ -32,9 +33,9 @@ export default function Header() {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/">
-          <span className="text-2xl font-bold text-gray-900 cursor-pointer">
-            Atlas<span className="text-primary">HomeServices</span>
-          </span>
+          <a className="cursor-pointer">
+            <Logo />
+          </a>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
