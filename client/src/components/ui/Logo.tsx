@@ -8,7 +8,7 @@ export default function Logo() {
       <img 
         src="/assets/2.png"
         alt="Atlas HomeServices Logo" 
-        className="h-24 w-24" 
+        className="h-16 w-16" 
         style={{ 
           objectFit: 'contain',
           opacity: 1
