@@ -24,12 +24,12 @@ export default function Header() {
 
   const isActive = (path: string) => location === path;
 
-  // Navigation link styling
+  // Navigation link styling - made consistent for all items
   const linkStyle = (path: string) => 
-    `cursor-pointer transition-colors duration-200 text-lg ${
+    `cursor-pointer transition-colors duration-200 text-lg font-medium ${
       isActive(path) 
-        ? "text-white font-semibold" // Active link style - made more prominent
-        : "text-gray-300 hover:text-white font-medium" // Inactive link style - added medium weight
+        ? "text-white" // Active state
+        : "text-gray-300 hover:text-white" // Inactive state
     }`;
 
   return (
