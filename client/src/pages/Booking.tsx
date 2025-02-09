@@ -50,6 +50,37 @@ export default function Booking() {
                 selected={date}
                 onSelect={setDate}
                 className="rounded-md border"
+                showOutsideDays={false}
+                captionLayout="dropdown-buttons"
+                fromYear={2024}
+                toYear={2025}
+                classNames={{
+                  root: "w-full",
+                  months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+                  month: "space-y-4",
+                  caption: "flex justify-center pt-1 relative items-center gap-1",
+                  caption_label: "text-sm font-medium text-gray-900",
+                  nav: "space-x-1 flex items-center",
+                  nav_button: "h-7 w-7 bg-transparent p-0 text-gray-900 hover:bg-gray-100 rounded-md",
+                  nav_button_previous: "absolute left-1",
+                  nav_button_next: "absolute right-1",
+                  table: "w-full border-collapse space-y-1",
+                  head_row: "flex",
+                  head_cell: "text-gray-900 rounded-md w-8 font-normal text-[0.8rem]",
+                  row: "flex w-full mt-2",
+                  cell: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-black",
+                  day: "h-8 w-8 p-0 font-normal text-gray-900 aria-selected:bg-black aria-selected:text-white hover:bg-gray-100 rounded-md",
+                  day_today: "bg-gray-100 text-gray-900",
+                  day_outside: "text-gray-500 opacity-50",
+                  day_disabled: "text-gray-500 opacity-50",
+                  day_range_middle: "aria-selected:bg-gray-100 aria-selected:text-gray-900",
+                  day_hidden: "invisible",
+                  caption_dropdowns: "flex gap-2 text-gray-900",
+                  dropdown: "relative z-10",
+                  dropdown_button: "px-2 py-1 text-sm rounded-md border border-gray-300 hover:bg-gray-100",
+                  dropdown_content: "absolute mt-1 bg-white border border-gray-300 rounded-md shadow-md z-50",
+                  dropdown_item: "px-2 py-1 text-sm hover:bg-gray-100 cursor-pointer"
+                }}
               />
 
               {date && (
@@ -61,7 +92,7 @@ export default function Booking() {
                         key={time}
                         variant={timeSlot === time ? "default" : "outline"}
                         onClick={() => setTimeSlot(time)}
-                        className={`w-full ${timeSlot === time ? 'bg-primary text-white' : 'text-gray-900 border-gray-300 hover:bg-gray-100'}`}
+                        className={timeSlot === time ? 'bg-black text-white hover:bg-black/90' : 'text-gray-900 hover:bg-gray-100'}
                       >
                         {time}
                       </Button>
@@ -162,7 +193,7 @@ export default function Booking() {
                   />
                   <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full bg-black hover:bg-black/90 text-white"
                     disabled={!date || !timeSlot}
                   >
                     Schedule Consultation
