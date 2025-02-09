@@ -23,9 +23,13 @@ export default function Header() {
   }, []);
 
   const isActive = (path: string) => location === path;
+
+  // Navigation link styling
   const linkStyle = (path: string) => 
-    `cursor-pointer transition-colors duration-200 ${
-      isActive(path) ? "text-white font-medium" : "text-gray-300 hover:text-white"
+    `cursor-pointer transition-colors duration-200 text-lg ${
+      isActive(path) 
+        ? "text-white font-semibold" // Active link style - made more prominent
+        : "text-gray-300 hover:text-white font-medium" // Inactive link style - added medium weight
     }`;
 
   return (
@@ -37,9 +41,7 @@ export default function Header() {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/">
-          <a className="cursor-pointer">
-            <Logo />
-          </a>
+          <Logo />
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
