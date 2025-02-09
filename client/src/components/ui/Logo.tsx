@@ -4,9 +4,9 @@ export default function Logo() {
   return (
     <div className="flex items-center">
       <img 
-        src="/2.png"
+        src="/assets/TopNavBarLogo.PNG"
         alt="Atlas HomeServices Logo" 
-        className="h-16 w-auto"
+        className="h-12 w-auto"
       />
     </div>
   );
