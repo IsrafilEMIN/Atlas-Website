@@ -9,7 +9,7 @@ export default function Header() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
-    ["rgb(0, 0, 0)", "rgba(0, 0, 0, 0.9)"]
+    ["rgba(0, 0, 0, 0.8)", "rgba(0, 0, 0, 0.9)"]
   );
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
@@ -23,12 +23,16 @@ export default function Header() {
   }, []);
 
   const isActive = (path: string) => location === path;
+  const linkStyle = (path: string) => 
+    `cursor-pointer transition-colors duration-200 ${
+      isActive(path) ? "text-white font-medium" : "text-gray-300 hover:text-white"
+    }`;
 
   return (
     <motion.header
       style={{ backgroundColor }}
       className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
-        isScrolled ? "py-2 border-b border-gray-800" : "py-3"
+        isScrolled ? "py-2 border-b border-gray-800/50" : "py-3"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -40,37 +44,27 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center space-x-8">
           <Link href="/">
-            <span className={`cursor-pointer transition-colors ${
-              isActive("/") ? "text-white font-medium" : "text-gray-300 hover:text-white"
-            }`}>
+            <span className={linkStyle("/")}>
               Home
             </span>
           </Link>
           <Link href="/services">
-            <span className={`cursor-pointer transition-colors ${
-              isActive("/services") ? "text-white font-medium" : "text-gray-300 hover:text-white"
-            }`}>
+            <span className={linkStyle("/services")}>
               Services
             </span>
           </Link>
           <Link href="/pricing">
-            <span className={`cursor-pointer transition-colors ${
-              isActive("/pricing") ? "text-white font-medium" : "text-gray-300 hover:text-white"
-            }`}>
+            <span className={linkStyle("/pricing")}>
               Pricing
             </span>
           </Link>
           <Link href="/gallery">
-            <span className={`cursor-pointer transition-colors ${
-              isActive("/gallery") ? "text-white font-medium" : "text-gray-300 hover:text-white"
-            }`}>
+            <span className={linkStyle("/gallery")}>
               Gallery
             </span>
           </Link>
           <Link href="/contact">
-            <span className={`cursor-pointer transition-colors ${
-              isActive("/contact") ? "text-white font-medium" : "text-gray-300 hover:text-white"
-            }`}>
+            <span className={linkStyle("/contact")}>
               Contact
             </span>
           </Link>
