@@ -92,7 +92,11 @@ export default function Booking() {
                         key={time}
                         variant={timeSlot === time ? "default" : "outline"}
                         onClick={() => setTimeSlot(time)}
-                        className={timeSlot === time ? 'bg-black text-white hover:bg-black/90' : 'text-gray-900 hover:bg-gray-100'}
+                        className={
+                          timeSlot === time
+                            ? 'bg-black text-white hover:bg-black/90'
+                            : 'bg-white text-black border-gray-300 hover:bg-gray-100'
+                        }
                       >
                         {time}
                       </Button>
