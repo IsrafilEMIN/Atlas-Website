@@ -12,17 +12,17 @@ export default function Footer() {
             <div className="mb-4">
               <Logo />
             </div>
-            <p className="text-white-600 mb-4">
+            <p className="text-gray-300 mb-4">
               Professional painting services for residential and commercial properties.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-white-400 hover:text-gray-500">
+              <a href="#" className="text-gray-300 hover:text-white/60">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-white-400 hover:text-gray-500">
+              <a href="#" className="text-gray-300 hover:text-white/60">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-white-400 hover:text-gray-500">
+              <a href="#" className="text-gray-300 hover:text-white/60">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -30,26 +30,26 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-white-900 mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-gray-300 mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/services">
-                  <a className="text-white-600 hover:text-gray-500">Services</a>
+                  <a className="text-gray-300 hover:underline">Services</a>
                 </Link>
               </li>
               <li>
                 <Link href="/pricing">
-                  <a className="text-white-600 hover:text-gray-500">Pricing</a>
+                  <a className="text-gray-300 hover:underline">Pricing</a>
                 </Link>
               </li>
               <li>
                 <Link href="/gallery">
-                  <a className="text-white-600 hover:text-gray-500">Gallery</a>
+                  <a className="text-gray-300 hover:underline">Gallery</a>
                 </Link>
               </li>
               <li>
                 <Link href="/booking">
-                  <a className="text-white-600 hover:text-gray-500">Book Now</a>
+                  <a className="text-gray-300 hover:underline">Book Now</a>
                 </Link>
               </li>
             </ul>
@@ -57,37 +57,35 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold text-white-900 mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold text-gray-300 mb-4">Contact Us</h3>
             <ul className="space-y-2">
-              <li className="flex items-center text-white-600">
+              <li className="flex items-center text-gray-300">
                 <Phone className="w-5 h-5 mr-2" />
-                <span>(555) 123-4567</span>
+                <span>(647) 916-0826</span>
               </li>
-              <li className="flex items-center text-white-600">
+              <li className="flex items-center text-gray-300">
                 <Mail className="w-5 h-5 mr-2" />
-                <span>info@atlashomeservices.com</span>
+                <span>atlas.homeservices@icloud.com</span>
               </li>
-              <li className="flex items-center text-white-600">
+              <li className="flex items-center text-gray-300">
                 <MapPin className="w-5 h-5 mr-2" />
-                <span>123 Paint Street, SF, CA</span>
+                <span>atlaspainting.com</span>
               </li>
             </ul>
           </div>
 
           {/* Business Hours */}
           <div>
-            <h3 className="text-lg font-semibold text-white-900 mb-4">Business Hours</h3>
+            <h3 className="text-lg font-semibold text-gray-300 mb-4">Business Hours</h3>
             <ul className="space-y-2">
-              <li className="text-white-600">Mon - Fri: 8:00 AM - 6:00 PM</li>
-              <li className="text-white-600">Saturday: 9:00 AM - 5:00 PM</li>
-              <li className="text-white-600">Sunday: Closed</li>
+              <li className="text-gray-300">Mon - Sun: 8:00 - 20:00</li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white-200 mt-12 pt-8">
-          <p className="text-center text-white-600">
-            © {new Date().getFullYear()} Atlas HomeServices. All rights reserved.
+        <div className="border-t text-gray-300 mt-12 pt-8">
+          <p className="text-center text-gray-300">
+           Copyright © {new Date().getFullYear()} Atlas HomeServices. All rights reserved.
           </p>
         </div>
       </div>

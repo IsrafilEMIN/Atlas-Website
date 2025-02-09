@@ -36,7 +36,7 @@ export default function Header() {
     <motion.header
       style={{ backgroundColor }}
       className={`fixed top-0 left-0 right-0 z-50 bg-black transition-all duration-300 ${
-        isScrolled ? "py-1.5 border-b border-gray-800/50" : "py-2.5"
+        isScrolled ? "py-1.5 border-b border-gray-800/50" : "py-2"
       }`}
     >
       <div className="mx-auto px-6 max-w-6xl flex items-center justify-between relative box-content">
@@ -44,7 +44,7 @@ export default function Header() {
           <Logo />
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-16">
           <Link href="/">
             <span className={linkStyle("/")}>
               Home

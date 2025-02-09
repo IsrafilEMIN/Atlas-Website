@@ -49,17 +49,17 @@ export default function Hero() {
           >
             <Button 
               size="lg"  
-              className="bg-white text-black border-2 border-black hover:bg-gray-300"
+              className="bg-primary text-white hover:bg-primary/90"
               onClick={() => window.location.href = '/services'}
             >
-              Our Services
+              Our services
             </Button>
             <Button 
               size="lg" 
-              className="bg-primary text-white hover:bg-primary/70"
+              className="bg-white text-black border-2 border-black hover:bg-primary hover:text-white"
               onClick={() => window.location.href = '/booking'}
             >
-              Book Now
+              Book now
             </Button>
           </motion.div>
         </motion.div>
