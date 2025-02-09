@@ -26,7 +26,35 @@ export default function Booking() {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data, date, timeSlot);
+    if (!date || !timeSlot) return;
+
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          date: date.toISOString(),
+          timeSlot,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to book appointment');
+      }
+
+      // Reset form
+      form.reset();
+      setDate(undefined);
+      setTimeSlot(undefined);
+      
+      alert('Booking successful! You will receive confirmation via SMS and email.');
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('Failed to book appointment. Please try again.');
+    }
   };
 
   return (
@@ -81,7 +109,13 @@ export default function Booking() {
                 <div className="mt-4">
                   <h3 className="text-sm font-medium mb-2 text-gray-900">Available Time Slots</h3>
                   <div className="grid grid-cols-2 gap-2">
-                    {["9:00 AM", "10:00 AM", "2:00 PM", "3:00 PM"].map((time) => (
+                    {Array.from({ length: 25 }, (_, i) => {
+                      const hour = Math.floor(i / 2) + 8;
+                      const minute = i % 2 === 0 ? '00' : '30';
+                      const ampm = hour >= 12 ? 'PM' : 'AM';
+                      const hour12 = hour > 12 ? hour - 12 : hour;
+                      return `${hour12}:${minute} ${ampm}`;
+                    }).map((time) => (
                       <Button
                         key={time}
                         variant={timeSlot === time ? "default" : "outline"}
