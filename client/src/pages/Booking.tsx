@@ -115,6 +115,7 @@ export default function Booking() {
                           position="popper"
                           sideOffset={4}
                           align="start"
+                          avoidCollisions={false}
                         >
                           <SelectItem value="residential">Residential Painting</SelectItem>
                           <SelectItem value="commercial">Commercial Painting</SelectItem>
