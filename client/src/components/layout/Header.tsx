@@ -24,9 +24,9 @@ export default function Header() {
 
   const isActive = (path: string) => location === path;
 
-  // Navigation link styling - updated with SF Pro font and smaller text
+  // Navigation link styling - updated with smaller text
   const linkStyle = (path: string) => 
-    `cursor-pointer transition-colors duration-200 text-base font-medium font-['SF Pro Display',-apple-system,BlinkMacSystemFont,system-ui,sans-serif] ${
+    `cursor-pointer transition-colors duration-200 text-sm font-medium font-['SF Pro Display',-apple-system,BlinkMacSystemFont,system-ui,sans-serif] ${
       isActive(path) 
         ? "text-white" // Active state
         : "text-gray-300 hover:text-white" // Inactive state
@@ -39,12 +39,12 @@ export default function Header() {
         isScrolled ? "py-2 border-b border-gray-800/50" : "py-3"
       }`}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div className="container mx-auto px-6 max-w-5xl flex items-center justify-between">
         <Link href="/">
           <Logo />
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6">
           <Link href="/">
             <span className={linkStyle("/")}>
               Home
