@@ -39,7 +39,7 @@ export default function Header() {
         isScrolled ? "py-1.5 border-b border-gray-800/50" : "py-2.5"
       }`}
     >
-      <div className="container mx-auto px-6 max-w-6xl flex items-center justify-between">
+      <div className="mx-auto px-6 max-w-6xl flex items-center justify-between relative box-content">
         <Link href="/">
           <Logo />
         </Link>

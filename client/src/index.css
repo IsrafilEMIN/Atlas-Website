@@ -9,7 +9,6 @@
 
   html {
     @apply overflow-y-scroll;
-    padding-right: calc(100vw - 100%);
   }
 
   body {
