@@ -6,12 +6,11 @@ export default function Logo() {
   return (
     <div className="flex items-center">
       <img 
-        src="/assets/3.PNG"
+        src="/assets/2.png"
         alt="Atlas HomeServices Logo" 
-        className="h-12 w-auto"
+        className="h-12 w-12" 
         style={{ 
-          minWidth: '128px', 
-          filter: 'brightness(0) invert(1)',
+          objectFit: 'contain',
           opacity: 1
         }}
         onError={(e) => {
