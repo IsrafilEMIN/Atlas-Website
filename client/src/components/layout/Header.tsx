@@ -36,10 +36,10 @@ export default function Header() {
     <motion.header
       style={{ backgroundColor }}
       className={`fixed top-0 left-0 right-0 z-50 bg-black transition-all duration-300 ${
-        isScrolled ? "py-2 border-b border-gray-800/50" : "py-3"
+        isScrolled ? "py-1.5 border-b border-gray-800/50" : "py-2.5"
       }`}
     >
-      <div className="container mx-auto px-6 max-w-5xl flex items-center justify-between">
+      <div className="container mx-auto px-6 max-w-6xl flex items-center justify-between">
         <Link href="/">
           <Logo />
         </Link>
