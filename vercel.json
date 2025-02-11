@@ -36,7 +36,6 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "zeroConfig": true,
         "distDir": "dist/public"
       }
     }
