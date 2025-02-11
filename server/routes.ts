@@ -21,6 +21,9 @@ export function registerRoutes(app: Express): Server {
         content: `New booking from ${booking.customerName} for ${booking.serviceType}`
       });
 
+      // Send email confirmation
+      await sendBookingEmail(booking);
+
       res.json({ success: true, booking });
     } catch (error) {
       if (error instanceof z.ZodError) {

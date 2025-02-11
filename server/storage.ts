@@ -10,6 +10,39 @@ const pool = new Pool({
 });
 
 // Initialize drizzle with the serverless-optimized pool
+import sgMail from '@sendgrid/mail';
+
+// Initialize SendGrid
+if (!process.env.SENDGRID_API_KEY) {
+  console.warn('SENDGRID_API_KEY not set. Emails will not be sent.');
+} else {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
+
+async function sendBookingEmail(booking: Booking) {
+  if (!process.env.SENDGRID_API_KEY) return;
+  
+  const msg = {
+    to: booking.customerEmail,
+    from: process.env.SENDGRID_FROM_EMAIL || 'noreply@yourdomain.com',
+    subject: 'Booking Confirmation',
+    text: `Thank you for your booking, ${booking.customerName}!
+    Service: ${booking.serviceType}
+    Details: ${booking.projectDetails}`,
+    html: `<h1>Booking Confirmation</h1>
+    <p>Thank you for your booking, ${booking.customerName}!</p>
+    <p><strong>Service:</strong> ${booking.serviceType}</p>
+    <p><strong>Details:</strong> ${booking.projectDetails}</p>`
+  };
+
+  try {
+    await sgMail.send(msg);
+    return true;
+  } catch (error) {
+    console.error('SendGrid Error:', error);
+    return false;
+  }
+}
 const db = drizzle(pool);
 
 export interface IStorage {
