@@ -10,8 +10,6 @@
   html {
     @apply bg-white;
     overflow-y: scroll;
-    margin-left: calc(100vw - 100%);
-    margin-right: 0;
   }
 
   body {
