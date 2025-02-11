@@ -20,29 +20,63 @@ if (!process.env.SENDGRID_API_KEY) {
 }
 
 async function sendBookingEmail(booking: Booking) {
-  if (!process.env.SENDGRID_API_KEY) return;
-  
+  if (!process.env.SENDGRID_API_KEY || !process.env.SENDGRID_FROM_EMAIL) {
+    console.warn('SendGrid configuration missing. Email not sent.');
+    return false;
+  }
+
   const msg = {
     to: booking.customerEmail,
-    from: process.env.SENDGRID_FROM_EMAIL || 'noreply@yourdomain.com',
-    subject: 'Booking Confirmation',
-    text: `Thank you for your booking, ${booking.customerName}!
-    Service: ${booking.serviceType}
-    Details: ${booking.projectDetails}`,
-    html: `<h1>Booking Confirmation</h1>
-    <p>Thank you for your booking, ${booking.customerName}!</p>
-    <p><strong>Service:</strong> ${booking.serviceType}</p>
-    <p><strong>Details:</strong> ${booking.projectDetails}</p>`
+    from: process.env.SENDGRID_FROM_EMAIL,
+    subject: 'Your Painting Service Booking Confirmation',
+    text: `
+Dear ${booking.customerName},
+
+Thank you for booking with Atlas HomeServices! We're excited to help transform your space.
+
+Booking Details:
+- Service Type: ${booking.serviceType}
+- Project Details: ${booking.projectDetails}
+- Status: ${booking.status}
+
+We will contact you shortly to confirm your appointment time and discuss any specific requirements.
+
+If you have any questions, please don't hesitate to reach out to us.
+
+Best regards,
+Atlas HomeServices Team
+    `,
+    html: `
+      <h1>Booking Confirmation</h1>
+      <p>Dear ${booking.customerName},</p>
+      <p>Thank you for booking with Atlas HomeServices! We're excited to help transform your space.</p>
+
+      <h2>Booking Details:</h2>
+      <ul>
+        <li><strong>Service Type:</strong> ${booking.serviceType}</li>
+        <li><strong>Project Details:</strong> ${booking.projectDetails}</li>
+        <li><strong>Status:</strong> ${booking.status}</li>
+      </ul>
+
+      <p>We will contact you shortly to confirm your appointment time and discuss any specific requirements.</p>
+
+      <p>If you have any questions, please don't hesitate to reach out to us.</p>
+
+      <p>Best regards,<br>
+      Atlas HomeServices Team</p>
+    `
   };
 
   try {
     await sgMail.send(msg);
+    console.log('Booking confirmation email sent successfully');
     return true;
   } catch (error) {
     console.error('SendGrid Error:', error);
     return false;
   }
 }
+
 const db = drizzle(pool);
 
 export interface IStorage {
@@ -97,6 +131,10 @@ export class MemStorage implements IStorage {
     } as Booking;
 
     this.bookings.set(id, booking);
+
+    // Send confirmation email
+    await sendBookingEmail(booking);
+
     return booking;
   }
 
