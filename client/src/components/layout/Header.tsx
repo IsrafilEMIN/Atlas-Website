@@ -94,7 +94,7 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Hamburger Menu */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-black border-t border-gray-800 md:hidden">
             <nav className="flex flex-col px-6 py-4">
