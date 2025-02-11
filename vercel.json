@@ -1,17 +1,17 @@
 {
-  "buildCommand": "npm install && npm run build",
-  "devCommand": "npm run dev",
+  "version": 2,
+  "buildCommand": "npm ci && npm run build",
   "installCommand": "npm install",
-  "framework": "vite",
-  "outputDirectory": "dist",
+  "framework": null,
+  "outputDirectory": "dist/public",
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     },
     {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
   ],
   "env": {
@@ -20,5 +20,24 @@
     "GIT_AUTHOR_EMAIL": "bot@vercel.com",
     "GIT_COMMITTER_NAME": "Vercel Bot",
     "GIT_COMMITTER_EMAIL": "bot@vercel.com"
-  }
+  },
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "dist/**/*",
+          "shared/**/*"
+        ]
+      }
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/public"
+      }
+    }
+  ]
 }
