@@ -2,6 +2,16 @@ import { users, type User, type InsertUser, type Booking, type InsertBooking, ty
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { Pool } from "@neondatabase/serverless";
 
+// Ensure we configure the pool properly for serverless environment
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  connectionTimeoutMillis: 5000, // 5 second timeout
+  max: 1, // Limit connections for serverless environment
+});
+
+// Initialize drizzle with the serverless-optimized pool
+const db = drizzle(pool);
+
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -70,4 +80,7 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Export the storage implementation based on environment
+export const storage = process.env.NODE_ENV === 'production' 
+  ? db
+  : new MemStorage();
