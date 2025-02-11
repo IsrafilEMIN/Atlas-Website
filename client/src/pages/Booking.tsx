@@ -47,7 +47,6 @@ export default function Booking() {
         throw new Error('Failed to book appointment');
       }
 
-      //
       // Reset form
       form.reset();
       setDate(undefined);
