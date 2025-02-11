@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 
 export default function Services() {
@@ -12,12 +13,20 @@ export default function Services() {
           Our Services
         </motion.h1>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Placeholder for service cards */}
           <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">Residential Painting</h3>
             <p className="text-gray-600">Premium interior and exterior painting services for your home.</p>
           </div>
-          {/* Add more service cards */}
+          
+          <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Commercial Painting</h3>
+            <p className="text-gray-600">Professional painting solutions for offices, retail spaces, and commercial properties.</p>
+          </div>
+
+          <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Drywall & Plastering</h3>
+            <p className="text-gray-600">Expert drywall installation, repair, and plastering services for walls and ceilings.</p>
+          </div>
         </div>
       </div>
     </div>
