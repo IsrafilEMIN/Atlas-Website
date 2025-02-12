@@ -98,19 +98,19 @@ export default function Header() {
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-black border-t border-gray-800 md:hidden">
             <nav className="flex flex-col px-6 py-4">
-              <Link href="/">
+              <Link href="/" onClick={() => setIsMenuOpen(false)}>
                 <span className={`${linkStyle("/")} block py-2`}>Home</span>
               </Link>
-              <Link href="/services">
+              <Link href="/services" onClick={() => setIsMenuOpen(false)}>
                 <span className={`${linkStyle("/services")} block py-2`}>Services</span>
               </Link>
-              <Link href="/pricing">
+              <Link href="/pricing" onClick={() => setIsMenuOpen(false)}>
                 <span className={`${linkStyle("/pricing")} block py-2`}>Pricing</span>
               </Link>
-              <Link href="/gallery">
+              <Link href="/gallery" onClick={() => setIsMenuOpen(false)}>
                 <span className={`${linkStyle("/gallery")} block py-2`}>Gallery</span>
               </Link>
-              <Link href="/contact">
+              <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
                 <span className={`${linkStyle("/contact")} block py-2`}>Contact</span>
               </Link>
             </nav>
