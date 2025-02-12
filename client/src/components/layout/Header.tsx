@@ -66,7 +66,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         <div className="flex items-center gap-4 md:hidden">
-          <Link href="/booking">
+          <Link href="/booking" onClick={() => setIsMenuOpen(false)}>
             <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black">
               Book Now
             </Button>
