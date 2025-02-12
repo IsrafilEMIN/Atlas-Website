@@ -4,6 +4,14 @@ import { storage } from "./storage";
 import { insertBookingSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
 
+const authenticate = (req: Request, res: Response, next: NextFunction) => {
+  const apiKey = req.headers['x-api-key'];
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+  next();
+};
+
 export function registerRoutes(app: Express): Server {
   // Existing booking route
   app.post('/api/bookings', async (req, res) => {
@@ -44,7 +52,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   // New review routes
-  app.post('/api/reviews', async (req, res) => {
+  app.post('/api/reviews', authenticate, async (req, res) => {
     try {
       const validatedData = insertReviewSchema.parse(req.body);
       const review = await storage.createReview(validatedData);
@@ -131,7 +139,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   // Delete a review
-  app.delete('/api/reviews/:id', async (req, res) => {
+  app.delete('/api/reviews/:id', authenticate, async (req, res) => {
     try {
       await storage.deleteReview(parseInt(req.params.id));
       res.json({ success: true });
