@@ -3,20 +3,42 @@ import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from 'embla-carousel-react';
-import { Review } from "@shared/schema";
 import { Link } from "wouter";
+
+// Static testimonials data
+const testimonials = [
+  {
+    id: 1,
+    customerName: "John Smith",
+    rating: 5,
+    comment: "Outstanding service! The team was professional and the results exceeded my expectations.",
+    serviceType: "Interior Painting",
+    createdAt: new Date("2024-01-15").toISOString()
+  },
+  {
+    id: 2,
+    customerName: "Sarah Johnson",
+    rating: 5,
+    comment: "Very pleased with the quality of work. They were punctual, clean, and detail-oriented.",
+    serviceType: "Exterior Painting",
+    createdAt: new Date("2024-01-20").toISOString()
+  },
+  {
+    id: 3,
+    customerName: "Michael Brown",
+    rating: 5,
+    comment: "Professional team, excellent communication, and beautiful results!",
+    serviceType: "Commercial Painting",
+    createdAt: new Date("2024-02-01").toISOString()
+  }
+];
 
 export default function Testimonials() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
     align: 'start',
     skipSnaps: false,
-  });
-
-  const { data: reviews = [] } = useQuery<Review[]>({
-    queryKey: ['/api/reviews/published'],
   });
 
   const scrollPrev = useCallback(() => {
@@ -37,8 +59,6 @@ export default function Testimonials() {
     }
   }, [emblaApi]);
 
-  if (reviews.length === 0) return null;
-
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-6">
@@ -55,8 +75,8 @@ export default function Testimonials() {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Real experiences from our valued customers
           </p>
-          <Link href="/reviews" className="text-black hover:underline mt-2 inline-block">
-            View all reviews →
+          <Link href="/contact" className="text-black hover:underline mt-2 inline-block">
+            Get in touch →
           </Link>
         </motion.div>
 
@@ -84,7 +104,7 @@ export default function Testimonials() {
 
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
-              {reviews.map((review, index) => (
+              {testimonials.map((review, index) => (
                 <div
                   key={review.id}
                   className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4"
@@ -109,25 +129,6 @@ export default function Testimonials() {
                         <p className="text-sm text-gray-500 mb-2">
                           Service: {review.serviceType}
                         </p>
-                        {review.images && review.images.length > 0 && (
-                          <div className="flex gap-2 mb-4">
-                            {review.images.slice(0, 2).map((image, i) => (
-                              <img
-                                key={i}
-                                src={image}
-                                alt={`Review image ${i + 1}`}
-                                className="w-20 h-20 object-cover rounded-lg"
-                              />
-                            ))}
-                            {review.images.length > 2 && (
-                              <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
-                                <span className="text-sm text-gray-500">
-                                  +{review.images.length - 2} more
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        )}
                       </div>
                       <div className="mt-4 pt-4 border-t border-gray-100">
                         <p className="font-semibold text-gray-900">

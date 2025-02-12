@@ -30,20 +30,6 @@ export const bookings = pgTable("bookings", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-// New reviews table
-export const reviews = pgTable("reviews", {
-  id: serial("id").primaryKey(),
-  bookingId: integer("booking_id").references(() => bookings.id).notNull(),
-  rating: integer("rating").notNull(),
-  comment: text("comment").notNull(),
-  customerName: text("customer_name").notNull(),
-  serviceType: text("service_type").notNull(),
-  images: json("images").$type<string[]>().default([]),
-  createdAt: timestamp("created_at").defaultNow(),
-  isPublished: boolean("is_published").notNull().default(false),
-  reviewToken: text("review_token").notNull().unique(), // For custom review submission links
-});
-
 // Notifications table for tracking communications
 export const notifications = pgTable("notifications", {
   id: serial("id").primaryKey(),
@@ -64,38 +50,24 @@ export const insertBookingSchema = createInsertSchema(bookings).omit({
   createdAt: true,
 });
 
-export const insertReviewSchema = createInsertSchema(reviews)
-  .omit({
-    id: true,
-    createdAt: true,
-    isPublished: true,
-    reviewToken: true,
-  })
-  .extend({
-    rating: z.number().min(1).max(5),
-    comment: z.string().min(10),
-    images: z.array(z.string().url()).optional(),
-  });
-
 export const insertNotificationSchema = createInsertSchema(notifications).omit({
   id: true,
   sentAt: true,
 });
 
 // Types for TypeScript
-export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertTimeSlot = z.infer<typeof insertTimeSlotSchema>;
 export type InsertBooking = z.infer<typeof insertBookingSchema>;
-export type InsertReview = z.infer<typeof insertReviewSchema>;
 export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 
 export type User = typeof users.$inferSelect;
 export type TimeSlot = typeof timeSlots.$inferSelect;
 export type Booking = typeof bookings.$inferSelect;
-export type Review = typeof reviews.$inferSelect;
 export type Notification = typeof notifications.$inferSelect;
 
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
 });
+
+export type InsertUser = z.infer<typeof insertUserSchema>;

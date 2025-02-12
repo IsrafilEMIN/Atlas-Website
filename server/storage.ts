@@ -1,6 +1,5 @@
 import { users, type User, type InsertUser, type Booking, type InsertBooking, 
-         type Notification, type InsertNotification, type Review, type InsertReview,
-         reviews, bookings, notifications } from "@shared/schema";
+         type Notification, type InsertNotification, bookings, notifications } from "@shared/schema";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { Pool } from "@neondatabase/serverless";
 import { randomBytes } from 'crypto';
@@ -13,11 +12,6 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createBooking(booking: InsertBooking): Promise<Booking>;
   createNotification(notification: InsertNotification): Promise<Notification>;
-  createReview(review: InsertReview): Promise<Review>;
-  getReview(id: number): Promise<Review | undefined>;
-  getReviewByToken(token: string): Promise<Review | undefined>;
-  getPublishedReviews(): Promise<Review[]>;
-  generateReviewToken(bookingId: number): Promise<string>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -44,34 +38,6 @@ export class DatabaseStorage implements IStorage {
   async createNotification(notification: InsertNotification): Promise<Notification> {
     const [newNotification] = await db.insert(notifications).values(notification).returning();
     return newNotification;
-  }
-
-  async createReview(review: InsertReview): Promise<Review> {
-    const reviewToken = await this.generateReviewToken(review.bookingId);
-    const [newReview] = await db.insert(reviews).values({
-      ...review,
-      reviewToken,
-      isPublished: true
-    }).returning();
-    return newReview;
-  }
-
-  async getReview(id: number): Promise<Review | undefined> {
-    const [review] = await db.select().from(reviews).where(eq(reviews.id, id));
-    return review;
-  }
-
-  async getReviewByToken(token: string): Promise<Review | undefined> {
-    const [review] = await db.select().from(reviews).where(eq(reviews.reviewToken, token));
-    return review;
-  }
-
-  async getPublishedReviews(): Promise<Review[]> {
-    return db.select().from(reviews).where(eq(reviews.isPublished, true));
-  }
-
-  async generateReviewToken(bookingId: number): Promise<string> {
-    return randomBytes(32).toString('hex');
   }
 }
 

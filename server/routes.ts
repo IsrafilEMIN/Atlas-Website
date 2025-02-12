@@ -1,11 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertBookingSchema, insertReviewSchema } from "@shared/schema";
+import { insertBookingSchema } from "@shared/schema";
 import { z } from "zod";
 
 export function registerRoutes(app: Express): Server {
-  // Existing booking route
+  // Booking route
   app.post('/api/bookings', async (req, res) => {
     try {
       // Validate request body
@@ -22,9 +22,6 @@ export function registerRoutes(app: Express): Server {
         content: `New booking from ${booking.customerName} for ${booking.serviceType}`
       });
 
-      // Send email confirmation
-      await sendBookingEmail(booking);
-
       res.json({ success: true, booking });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -39,73 +36,6 @@ export function registerRoutes(app: Express): Server {
       res.status(500).json({ 
         success: false, 
         message: 'Failed to create booking' 
-      });
-    }
-  });
-
-  // New review routes
-  app.post('/api/reviews', async (req, res) => {
-    try {
-      const validatedData = insertReviewSchema.parse(req.body);
-      const review = await storage.createReview(validatedData);
-      res.json({ success: true, review });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({
-          success: false,
-          message: 'Invalid review data',
-          errors: error.errors
-        });
-      }
-      console.error('Review creation error:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to create review'
-      });
-    }
-  });
-
-  app.get('/api/reviews/published', async (req, res) => {
-    try {
-      const reviews = await storage.getPublishedReviews();
-      res.json(reviews);
-    } catch (error) {
-      console.error('Error fetching reviews:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to fetch reviews'
-      });
-    }
-  });
-
-  app.get('/api/reviews/:token', async (req, res) => {
-    try {
-      const review = await storage.getReviewByToken(req.params.token);
-      if (!review) {
-        return res.status(404).json({
-          success: false,
-          message: 'Review not found'
-        });
-      }
-      res.json(review);
-    } catch (error) {
-      console.error('Error fetching review:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to fetch review'
-      });
-    }
-  });
-
-  app.post('/api/reviews/token/:bookingId', async (req, res) => {
-    try {
-      const token = await storage.generateReviewToken(parseInt(req.params.bookingId));
-      res.json({ success: true, token });
-    } catch (error) {
-      console.error('Error generating review token:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to generate review token'
       });
     }
   });
