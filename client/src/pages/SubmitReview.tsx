@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams } from "wouter";
 import { Star } from "lucide-react";
@@ -13,7 +12,7 @@ export default function SubmitReview() {
 
   const submitReview = useMutation({
     mutationFn: async (data: { rating: number; comment: string }) => {
-      const response = await fetch('/api/reviews', {
+      const response = await fetch('/api/reviews/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, token })

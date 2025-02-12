@@ -13,7 +13,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export function registerRoutes(app: Express): Server {
-  // Existing booking route
+  // Booking route (unchanged)
   app.post('/api/bookings', async (req, res) => {
     try {
       const validatedData = insertBookingSchema.parse(req.body);
@@ -41,8 +41,42 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  // Review Management Routes
-  // Create a new review (Protected by API key)
+  // Public endpoint to submit a review using a token
+  app.post('/api/reviews/submit', async (req, res) => {
+    try {
+      const { token, rating, comment } = req.body;
+      const review = await storage.getReviewByToken(token);
+
+      if (!review) {
+        return res.status(404).json({
+          success: false,
+          message: 'Review token not found or expired'
+        });
+      }
+
+      // Update the review with customer feedback
+      await storage.updateReview(review.id, {
+        rating,
+        comment,
+        isPublished: true
+      });
+
+      res.json({
+        success: true,
+        message: 'Review submitted successfully'
+      });
+    } catch (error) {
+      console.error('Review submission error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to submit review'
+      });
+    }
+  });
+
+  // Admin endpoints (protected by API key)
+
+  // Create a new review placeholder
   app.post('/api/reviews', authenticate, async (req, res) => {
     try {
       const validatedData = insertReviewSchema.parse(req.body);

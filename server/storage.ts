@@ -21,6 +21,7 @@ export interface IStorage {
   generateReviewToken(bookingId: number): Promise<string>;
   deleteReview(id: number): Promise<void>;
   updateReviewPublishStatus(id: number, isPublished: boolean): Promise<void>;
+  updateReview(id: number, data: { rating: number; comment: string; isPublished: boolean }): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -86,6 +87,16 @@ export class DatabaseStorage implements IStorage {
     await db
       .update(reviews)
       .set({ isPublished })
+      .where(eq(reviews.id, id));
+  }
+
+  async updateReview(
+    id: number, 
+    data: { rating: number; comment: string; isPublished: boolean }
+  ): Promise<void> {
+    await db
+      .update(reviews)
+      .set(data)
       .where(eq(reviews.id, id));
   }
 }
