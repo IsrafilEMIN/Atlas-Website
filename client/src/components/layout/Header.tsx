@@ -41,7 +41,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto px-6 max-w-6xl flex items-center justify-between relative box-content">
-        <Link href="/">
+        <Link href="/" onClick={() => setIsMenuOpen(false)}>
           <Logo />
         </Link>
 
