@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertBookingSchema, insertReviewSchema } from "@shared/schema";
@@ -16,23 +16,14 @@ export function registerRoutes(app: Express): Server {
   // Existing booking route
   app.post('/api/bookings', async (req, res) => {
     try {
-      // Validate request body
       const validatedData = insertBookingSchema.parse(req.body);
-
-      // Insert booking
       const booking = await storage.createBooking(validatedData);
-
-      // Send notification
       await storage.createNotification({
         bookingId: booking.id,
         type: 'email',
         status: 'pending',
         content: `New booking from ${booking.customerName} for ${booking.serviceType}`
       });
-
-      // Send email confirmation
-      await sendBookingEmail(booking);
-
       res.json({ success: true, booking });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -42,7 +33,6 @@ export function registerRoutes(app: Express): Server {
           errors: error.errors 
         });
       }
-
       console.error('Booking error:', error);
       res.status(500).json({ 
         success: false, 
@@ -51,7 +41,8 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  // New review routes
+  // Review Management Routes
+  // Create a new review (Protected by API key)
   app.post('/api/reviews', authenticate, async (req, res) => {
     try {
       const validatedData = insertReviewSchema.parse(req.body);
@@ -73,6 +64,7 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Get all published reviews (Public)
   app.get('/api/reviews/published', async (req, res) => {
     try {
       const reviews = await storage.getPublishedReviews();
@@ -86,35 +78,51 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  app.get('/api/reviews/:token', async (req, res) => {
+  // Delete a review (Protected by API key)
+  app.delete('/api/reviews/:id', authenticate, async (req, res) => {
     try {
-      const review = await storage.getReviewByToken(req.params.token);
-      if (!review) {
-        return res.status(404).json({
-          success: false,
-          message: 'Review not found'
-        });
-      }
-      res.json(review);
+      await storage.deleteReview(parseInt(req.params.id));
+      res.json({ success: true, message: 'Review deleted successfully' });
     } catch (error) {
-      console.error('Error fetching review:', error);
+      console.error('Error deleting review:', error);
       res.status(500).json({
         success: false,
-        message: 'Failed to fetch review'
+        message: 'Failed to delete review'
       });
     }
   });
 
-  // Generate review link for a booking
-  app.post('/api/reviews/generate-link/:bookingId', async (req, res) => {
+  // Update a review's published status (Protected by API key)
+  app.patch('/api/reviews/:id/publish', authenticate, async (req, res) => {
+    try {
+      const { isPublished } = req.body;
+      await storage.updateReviewPublishStatus(parseInt(req.params.id), isPublished);
+      res.json({ success: true, message: 'Review status updated successfully' });
+    } catch (error) {
+      console.error('Error updating review status:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to update review status'
+      });
+    }
+  });
+
+  // Generate authenticated review link (Protected by API key)
+  app.post('/api/reviews/generate-link/:bookingId', authenticate, async (req, res) => {
     try {
       const bookingId = parseInt(req.params.bookingId);
       const token = await storage.generateReviewToken(bookingId);
-      const reviewLink = `${process.env.PUBLIC_URL || 'https://your-domain.com'}/submit-review/${token}`;
-      
+
+      // Construct the review submission URL
+      const baseUrl = process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}`
+        : 'http://localhost:3000';
+      const reviewLink = `${baseUrl}/submit-review/${token}`;
+
       res.json({
         success: true,
-        reviewLink
+        reviewLink,
+        token
       });
     } catch (error) {
       console.error('Error generating review link:', error);
@@ -125,29 +133,22 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  app.post('/api/reviews/token/:bookingId', async (req, res) => {
+  // Get review by token (Public - for customer review submission)
+  app.get('/api/reviews/token/:token', async (req, res) => {
     try {
-      const token = await storage.generateReviewToken(parseInt(req.params.bookingId));
-      res.json({ success: true, token });
+      const review = await storage.getReviewByToken(req.params.token);
+      if (!review) {
+        return res.status(404).json({
+          success: false,
+          message: 'Review token not found or expired'
+        });
+      }
+      res.json({ success: true, review });
     } catch (error) {
-      console.error('Error generating review token:', error);
+      console.error('Error fetching review by token:', error);
       res.status(500).json({
         success: false,
-        message: 'Failed to generate review token'
-      });
-    }
-  });
-
-  // Delete a review
-  app.delete('/api/reviews/:id', authenticate, async (req, res) => {
-    try {
-      await storage.deleteReview(parseInt(req.params.id));
-      res.json({ success: true });
-    } catch (error) {
-      console.error('Error deleting review:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to delete review'
+        message: 'Failed to fetch review'
       });
     }
   });
