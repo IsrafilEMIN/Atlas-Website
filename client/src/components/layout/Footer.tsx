@@ -16,13 +16,13 @@ export default function Footer() {
               Professional painting services for residential and commercial properties.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white/60">
+              <a href="https://www.facebook.com/people/Atlas-HomeServices-Inc/61572733726450/" className="text-gray-300 hover:text-white/60">
                 <Facebook className="w-5 h-5" />
               </a>
               <a href="#" className="text-gray-300 hover:text-white/60">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white/60">
+              <a href="https://www.instagram.com/atlas_homeservices/" className="text-gray-300 hover:text-white/60">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -69,7 +69,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center text-gray-300">
                 <MapPin className="w-5 h-5 mr-2" />
-                <span>atlaspainting.com</span>
+                <span>atlas-paint.com</span>
               </li>
             </ul>
           </div>
