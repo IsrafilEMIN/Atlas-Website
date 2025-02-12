@@ -13,6 +13,7 @@ export class EmailService {
       this.sendgridClient = new MailService();
       this.sendgridClient.setApiKey(process.env.SENDGRID_API_KEY);
       this.provider = 'sendgrid';
+      console.log('SendGrid email service initialized');
     }
     // Initialize NodeMailer if available
     else if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
@@ -24,6 +25,7 @@ export class EmailService {
         },
       });
       this.provider = 'nodemailer';
+      console.log('NodeMailer email service initialized');
     } else {
       console.warn('No email service configured. Emails will not be sent.');
       this.provider = 'sendgrid'; // Default to SendGrid even if not configured
@@ -47,31 +49,15 @@ export class EmailService {
       `
     };
 
-    try {
-      if (this.provider === 'sendgrid' && this.sendgridClient) {
-        await this.sendgridClient.send({
-          to: booking.customerEmail,
-          from: process.env.SENDGRID_FROM_EMAIL!,
-          ...emailContent
-        });
-      } else if (this.provider === 'nodemailer' && this.nodemailerTransport) {
-        await this.nodemailerTransport.sendMail({
-          from: process.env.GMAIL_USER,
-          to: booking.customerEmail,
-          ...emailContent
-        });
-      } else {
-        console.warn('No email service available');
-        return false;
-      }
-      return true;
-    } catch (error) {
-      console.error(`${this.provider} email error:`, error);
-      return false;
-    }
+    return this.sendEmail(booking.customerEmail, emailContent);
   }
 
-  async sendReviewInvitation(booking: Booking, reviewLink: string): Promise<boolean> {
+  async sendReviewInvitation(booking: Booking, reviewToken: string): Promise<boolean> {
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000';
+    const reviewLink = `${baseUrl}/submit-review/${reviewToken}`;
+
     const emailContent = {
       subject: 'Share Your Experience with Atlas HomeServices',
       text: `Dear ${booking.customerName},\n\nWe value your feedback! Please share your experience by clicking this link: ${reviewLink}`,
@@ -83,18 +69,22 @@ export class EmailService {
       `
     };
 
+    return this.sendEmail(booking.customerEmail, emailContent);
+  }
+
+  private async sendEmail(to: string, content: { subject: string; text: string; html: string }): Promise<boolean> {
     try {
       if (this.provider === 'sendgrid' && this.sendgridClient) {
         await this.sendgridClient.send({
-          to: booking.customerEmail,
-          from: process.env.SENDGRID_FROM_EMAIL!,
-          ...emailContent
+          to,
+          from: process.env.SENDGRID_FROM_EMAIL || 'noreply@atlashomeservices.com',
+          ...content
         });
       } else if (this.provider === 'nodemailer' && this.nodemailerTransport) {
         await this.nodemailerTransport.sendMail({
           from: process.env.GMAIL_USER,
-          to: booking.customerEmail,
-          ...emailContent
+          to,
+          ...content
         });
       } else {
         console.warn('No email service available');

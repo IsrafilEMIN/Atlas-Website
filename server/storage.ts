@@ -13,6 +13,7 @@ export interface IStorage {
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   createBooking(booking: InsertBooking): Promise<Booking>;
+  getBooking(id: number): Promise<Booking | undefined>;  
   createNotification(notification: InsertNotification): Promise<Notification>;
   createReview(review: InsertReview): Promise<Review>;
   getReview(id: number): Promise<Review | undefined>;
@@ -44,6 +45,11 @@ export class DatabaseStorage implements IStorage {
     const [newBooking] = await db.insert(bookings).values(booking).returning();
     await emailService.sendBookingConfirmation(newBooking);
     return newBooking;
+  }
+
+  async getBooking(id: number): Promise<Booking | undefined> {
+    const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
+    return booking;
   }
 
   async createNotification(notification: InsertNotification): Promise<Notification> {
