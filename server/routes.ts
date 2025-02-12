@@ -130,6 +130,20 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Delete a review
+  app.delete('/api/reviews/:id', async (req, res) => {
+    try {
+      await storage.deleteReview(parseInt(req.params.id));
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error deleting review:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to delete review'
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
