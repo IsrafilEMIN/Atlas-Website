@@ -6,23 +6,50 @@ import { Pool } from "@neondatabase/serverless";
 import { randomBytes } from 'crypto';
 import { eq } from "drizzle-orm";
 import { db } from './db';
-import { emailService } from './services/email';
+
+// Initialize SendGrid
+import sgMail from '@sendgrid/mail';
+
+if (!process.env.SENDGRID_API_KEY) {
+  console.warn('SENDGRID_API_KEY not set. Emails will not be sent.');
+} else {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
+
+async function sendBookingEmail(booking: Booking) {
+  if (!process.env.SENDGRID_API_KEY || !process.env.SENDGRID_FROM_EMAIL) {
+    console.warn('SendGrid configuration missing. Email not sent.');
+    return false;
+  }
+
+  const msg = {
+    to: booking.customerEmail,
+    from: process.env.SENDGRID_FROM_EMAIL,
+    subject: 'Your Painting Service Booking Confirmation',
+    text: `Dear ${booking.customerName},\n\nThank you for booking with Atlas HomeServices!`,
+    html: `<h1>Booking Confirmation</h1><p>Dear ${booking.customerName},</p>`
+  };
+
+  try {
+    await sgMail.send(msg);
+    return true;
+  } catch (error) {
+    console.error('SendGrid Error:', error);
+    return false;
+  }
+}
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   createBooking(booking: InsertBooking): Promise<Booking>;
-  getBooking(id: number): Promise<Booking | undefined>;  
   createNotification(notification: InsertNotification): Promise<Notification>;
   createReview(review: InsertReview): Promise<Review>;
   getReview(id: number): Promise<Review | undefined>;
   getReviewByToken(token: string): Promise<Review | undefined>;
   getPublishedReviews(): Promise<Review[]>;
   generateReviewToken(bookingId: number): Promise<string>;
-  deleteReview(id: number): Promise<void>;
-  updateReviewPublishStatus(id: number, isPublished: boolean): Promise<void>;
-  updateReview(id: number, data: { rating: number; comment: string; isPublished: boolean }): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -43,13 +70,8 @@ export class DatabaseStorage implements IStorage {
 
   async createBooking(booking: InsertBooking): Promise<Booking> {
     const [newBooking] = await db.insert(bookings).values(booking).returning();
-    await emailService.sendBookingConfirmation(newBooking);
+    await sendBookingEmail(newBooking);
     return newBooking;
-  }
-
-  async getBooking(id: number): Promise<Booking | undefined> {
-    const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
-    return booking;
   }
 
   async createNotification(notification: InsertNotification): Promise<Notification> {
@@ -84,27 +106,7 @@ export class DatabaseStorage implements IStorage {
   async generateReviewToken(bookingId: number): Promise<string> {
     return randomBytes(32).toString('hex');
   }
-
-  async deleteReview(id: number): Promise<void> {
-    await db.delete(reviews).where(eq(reviews.id, id));
-  }
-
-  async updateReviewPublishStatus(id: number, isPublished: boolean): Promise<void> {
-    await db
-      .update(reviews)
-      .set({ isPublished })
-      .where(eq(reviews.id, id));
-  }
-
-  async updateReview(
-    id: number, 
-    data: { rating: number; comment: string; isPublished: boolean }
-  ): Promise<void> {
-    await db
-      .update(reviews)
-      .set(data)
-      .where(eq(reviews.id, id));
-  }
 }
 
+// Export the storage implementation based on environment
 export const storage = new DatabaseStorage();
