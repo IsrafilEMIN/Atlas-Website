@@ -1,6 +1,8 @@
-import { users, type User, type InsertUser, type Booking, type InsertBooking, type Notification, type InsertNotification } from "@shared/schema";
+import { users, type User, type InsertUser, type Booking, type InsertBooking, 
+         type Notification, type InsertNotification, type Review, type InsertReview } from "@shared/schema";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { Pool } from "@neondatabase/serverless";
+import { randomBytes } from 'crypto';
 
 // Ensure we configure the pool properly for serverless environment
 const pool = new Pool({
@@ -85,23 +87,36 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createBooking(booking: InsertBooking): Promise<Booking>;
   createNotification(notification: InsertNotification): Promise<Notification>;
+
+  // New review methods
+  createReview(review: InsertReview): Promise<Review>;
+  getReview(id: number): Promise<Review | undefined>;
+  getReviewByToken(token: string): Promise<Review | undefined>;
+  getPublishedReviews(): Promise<Review[]>;
+  generateReviewToken(bookingId: number): Promise<string>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private bookings: Map<number, Booking>;
   private notifications: Map<number, Notification>;
+  private reviews: Map<number, Review>;
+  private reviewTokens: Map<string, number>; // Token to review ID mapping
   private currentId: number;
   private bookingId: number;
   private notificationId: number;
+  private reviewId: number;
 
   constructor() {
     this.users = new Map();
     this.bookings = new Map();
     this.notifications = new Map();
+    this.reviews = new Map();
+    this.reviewTokens = new Map();
     this.currentId = 1;
     this.bookingId = 1;
     this.notificationId = 1;
+    this.reviewId = 1;
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -148,6 +163,42 @@ export class MemStorage implements IStorage {
 
     this.notifications.set(id, notification);
     return notification;
+  }
+
+  async createReview(insertReview: InsertReview): Promise<Review> {
+    const id = this.reviewId++;
+    const review = {
+      ...insertReview,
+      id,
+      createdAt: new Date(),
+      isPublished: true,
+      reviewToken: await this.generateReviewToken(insertReview.bookingId),
+    } as Review;
+
+    this.reviews.set(id, review);
+    this.reviewTokens.set(review.reviewToken, id);
+    return review;
+  }
+
+  async getReview(id: number): Promise<Review | undefined> {
+    return this.reviews.get(id);
+  }
+
+  async getReviewByToken(token: string): Promise<Review | undefined> {
+    const reviewId = this.reviewTokens.get(token);
+    if (reviewId) {
+      return this.reviews.get(reviewId);
+    }
+    return undefined;
+  }
+
+  async getPublishedReviews(): Promise<Review[]> {
+    return Array.from(this.reviews.values()).filter(review => review.isPublished);
+  }
+
+  async generateReviewToken(bookingId: number): Promise<string> {
+    const token = randomBytes(32).toString('hex');
+    return token;
   }
 }
 
