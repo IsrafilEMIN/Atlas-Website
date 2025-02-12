@@ -117,9 +117,70 @@ export default function Booking() {
                 selected={date}
                 onSelect={setDate}
                 className="rounded-md border"
-                disabled={(date) => date < new Date()}
-                fromYear={currentYear}
-                toYear={currentYear + 1}
+                showOutsideDays={false}
+                fromYear={2024}
+                toYear={2025}
+                classNames={{
+                  root: "w-full",
+                  months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+                  month: "space-y-4",
+                  caption: "flex justify-center pt-1 relative items-center",
+                  caption_label: "text-sm font-medium text-black hover:bg-gray-100 rounded-md px-2 py-1 cursor-pointer",
+                  nav: "space-x-1 flex items-center",
+                  nav_button: "h-7 w-7 bg-transparent p-0 text-black hover:bg-gray-100 rounded-md",
+                  nav_button_previous: "absolute left-1",
+                  nav_button_next: "absolute right-1",
+                  table: "w-full border-collapse space-y-1",
+                  head_row: "flex",
+                  head_cell: "text-black rounded-md w-8 font-normal text-[0.8rem]",
+                  row: "flex w-full mt-2",
+                  cell: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-black",
+                  day: `h-8 w-8 p-0 font-normal text-black hover:bg-gray-100 rounded-md
+                    aria-selected:bg-black aria-selected:text-white
+                    focus:bg-black focus:text-white
+                    focus-visible:bg-black focus-visible:text-white`,
+                  day_today: "bg-gray-100 text-black font-semibold",
+                  day_outside: "text-gray-400",
+                  day_disabled: "text-gray-300",
+                  day_range_middle: "aria-selected:bg-gray-100 aria-selected:text-black",
+                  day_hidden: "invisible",
+                  caption_dropdowns: "flex justify-center space-x-2",
+                  dropdown: "relative inline-block",
+                  dropdown_month: "text-black font-semibold",
+                  dropdown_year: "text-black font-semibold cursor-pointer",
+                  dropdown_icon: "ml-1 h-4 w-4"
+                }}
+                components={{
+                  Caption: ({ displayMonth }) => {
+                    const year = displayMonth.getFullYear();
+                    const month = displayMonth.toLocaleString('default', { month: 'long' });
+
+                    return (
+                      <div className="flex justify-center items-center space-x-2">
+                        <span className="text-black font-semibold">{month}</span>
+                        <span 
+                          className="text-black font-semibold cursor-pointer"
+                          onClick={() => setIsYearSelectOpen(!isYearSelectOpen)}
+                        >
+                          {year}
+                        </span>
+                        {isYearSelectOpen && (
+                          <div className="absolute top-8 bg-white border border-gray-200 rounded-md shadow-lg p-2 z-50">
+                            {Array.from({ length: 5 }, (_, i) => currentYear + i).map((y) => (
+                              <div
+                                key={y}
+                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
+                                onClick={() => handleYearSelect(y)}
+                              >
+                                {y}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+                }}
               />
 
               {date && (
@@ -170,7 +231,11 @@ export default function Booking() {
                               <SelectValue placeholder="Select a service" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
+                          <SelectContent
+                            side="bottom"
+                            position="popper"
+                            className="bg-white text-gray-900 z-50"
+                          >
                             <SelectItem value="residential">Residential Painting</SelectItem>
                             <SelectItem value="commercial">Commercial Painting</SelectItem>
                             <SelectItem value="exterior">Exterior Painting</SelectItem>
