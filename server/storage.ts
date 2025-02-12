@@ -7,38 +7,6 @@ import { randomBytes } from 'crypto';
 import { eq } from "drizzle-orm";
 import { db } from './db';
 
-// Initialize SendGrid
-import sgMail from '@sendgrid/mail';
-
-if (!process.env.SENDGRID_API_KEY) {
-  console.warn('SENDGRID_API_KEY not set. Emails will not be sent.');
-} else {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-}
-
-async function sendBookingEmail(booking: Booking) {
-  if (!process.env.SENDGRID_API_KEY || !process.env.SENDGRID_FROM_EMAIL) {
-    console.warn('SendGrid configuration missing. Email not sent.');
-    return false;
-  }
-
-  const msg = {
-    to: booking.customerEmail,
-    from: process.env.SENDGRID_FROM_EMAIL,
-    subject: 'Your Painting Service Booking Confirmation',
-    text: `Dear ${booking.customerName},\n\nThank you for booking with Atlas HomeServices!`,
-    html: `<h1>Booking Confirmation</h1><p>Dear ${booking.customerName},</p>`
-  };
-
-  try {
-    await sgMail.send(msg);
-    return true;
-  } catch (error) {
-    console.error('SendGrid Error:', error);
-    return false;
-  }
-}
-
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -70,7 +38,6 @@ export class DatabaseStorage implements IStorage {
 
   async createBooking(booking: InsertBooking): Promise<Booking> {
     const [newBooking] = await db.insert(bookings).values(booking).returning();
-    await sendBookingEmail(newBooking);
     return newBooking;
   }
 
