@@ -7,7 +7,7 @@ if (!process.env.RESEND_API_KEY) {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-interface EmailService {
+export interface EmailService {
   sendBookingConfirmation(booking: Booking): Promise<void>;
   sendAdminNotification(booking: Booking): Promise<void>;
 }
