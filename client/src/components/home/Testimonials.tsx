@@ -35,11 +35,20 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const [mounted, setMounted] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
     align: 'start',
     skipSnaps: false,
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
