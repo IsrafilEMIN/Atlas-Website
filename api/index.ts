@@ -37,5 +37,11 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   res.status(status).json({ message });
 });
 
+// Use port 4000 instead of default 3000
+const PORT = parseInt(process.env.PORT || '4000', 10);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 // Export for Vercel serverless function
 export default app;

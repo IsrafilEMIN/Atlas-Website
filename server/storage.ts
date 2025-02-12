@@ -12,6 +12,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createBooking(booking: InsertBooking): Promise<Booking>;
   createNotification(notification: InsertNotification): Promise<Notification>;
+  updateNotification(bookingId: number, status: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -38,6 +39,13 @@ export class DatabaseStorage implements IStorage {
   async createNotification(notification: InsertNotification): Promise<Notification> {
     const [newNotification] = await db.insert(notifications).values(notification).returning();
     return newNotification;
+  }
+
+  async updateNotification(bookingId: number, status: string): Promise<void> {
+    await db
+      .update(notifications)
+      .set({ status })
+      .where(eq(notifications.bookingId, bookingId));
   }
 }
 
