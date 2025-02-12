@@ -97,6 +97,26 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Generate review link for a booking
+  app.post('/api/reviews/generate-link/:bookingId', async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.bookingId);
+      const token = await storage.generateReviewToken(bookingId);
+      const reviewLink = `${process.env.PUBLIC_URL || 'https://your-domain.com'}/submit-review/${token}`;
+      
+      res.json({
+        success: true,
+        reviewLink
+      });
+    } catch (error) {
+      console.error('Error generating review link:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to generate review link'
+      });
+    }
+  });
+
   app.post('/api/reviews/token/:bookingId', async (req, res) => {
     try {
       const token = await storage.generateReviewToken(parseInt(req.params.bookingId));
