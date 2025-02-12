@@ -48,10 +48,10 @@ export default function Reviews() {
               value={ratingFilter}
               onValueChange={setRatingFilter}
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[180px] bg-white text-black border-gray-200 hover:border-gray-200 focus:border-gray-200 [&[data-state=open]]:border-gray-200">
                 <SelectValue placeholder="Filter by rating" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white text-black">
                 <SelectItem value="all">All Ratings</SelectItem>
                 <SelectItem value="5">5 Stars</SelectItem>
                 <SelectItem value="4">4 Stars</SelectItem>
