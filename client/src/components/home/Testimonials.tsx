@@ -38,15 +38,16 @@ export default function Testimonials() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768); // Mobile = <768px
-    };
-
-    checkScreenSize(); // Check initially
-    window.addEventListener("resize", checkScreenSize);
-
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+    if (emblaApi) {
+      if (!isMobile) {
+        emblaApi.drsOptions = { draggable: false }; // Manually disable dragging
+        emblaApi.on("pointerDown", (event) => event.preventDefault()); // Block drag gestures
+      } else {
+        emblaApi.drsOptions = { draggable: true }; // Enable drag on mobile
+      }
+    }
+  }, [emblaApi, isMobile]);
+  
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
