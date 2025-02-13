@@ -2,12 +2,10 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import WavePattern from "../ui/patterns/WavePattern";
 
-// Replace image imports with static URLs
-const IMAGES = {
-  modernInterior: "/images/projects/modern-interior.jpg",
-  commercialOffice: "/images/projects/commercial-office.jpg",
-  exteriorProject: "/images/projects/exterior-project.jpg",
-};
+// Import images directly from src/assets
+import modernInterior from "@/assets/modern-interior.jpg";
+import commercialOffice from "@/assets/commercial-office.jpg";
+import exteriorProject from "@/assets/exterior-project.jpg";
 
 export default function ProductShowcase() {
   const [ref, inView] = useInView({
@@ -45,7 +43,7 @@ export default function ProductShowcase() {
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-video bg-gray-100">
                 <img
-                  src={IMAGES.modernInterior}
+                  src={modernInterior}
                   alt="Modern Home Interior"
                   className="w-full h-full object-cover"
                 />
@@ -59,7 +57,7 @@ export default function ProductShowcase() {
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-video bg-gray-100">
                 <img
-                  src={IMAGES.commercialOffice}
+                  src={commercialOffice}
                   alt="Commercial Office Space"
                   className="w-full h-full object-cover"
                 />
@@ -73,7 +71,7 @@ export default function ProductShowcase() {
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-video bg-gray-100">
                 <img
-                  src={IMAGES.exteriorProject}
+                  src={exteriorProject}
                   alt="Exterior Transformation"
                   className="w-full h-full object-cover"
                 />
