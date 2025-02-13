@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
@@ -6,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import useEmblaCarousel from 'embla-carousel-react';
 import { Link } from "wouter";
 
-// Static testimonials data
 const testimonials = [
   {
     id: 1,
@@ -42,14 +42,6 @@ export default function Testimonials() {
     skipSnaps: false,
   });
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -59,6 +51,8 @@ export default function Testimonials() {
   }, [emblaApi]);
 
   useEffect(() => {
+    setMounted(true);
+
     if (emblaApi) {
       const interval = setInterval(() => {
         emblaApi.scrollNext();
@@ -67,6 +61,10 @@ export default function Testimonials() {
       return () => clearInterval(interval);
     }
   }, [emblaApi]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
