@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import WavePattern from "../ui/patterns/WavePattern";
 
-// Replace image imports with static URLs
+// Update image paths to include the assets directory
 const IMAGES = {
-  modernInterior: "/images/projects/modern-interior.jpg",
-  commercialOffice: "/images/projects/commercial-office.jpg",
-  exteriorProject: "/images/projects/exterior-project.jpg",
+  modernInterior: "/assets/projects/modern-interior.jpg",
+  commercialOffice: "/assets/projects/commercial-office.jpg",
+  exteriorProject: "/assets/projects/exterior-project.jpg",
 };
 
 export default function ProductShowcase() {
@@ -48,6 +48,10 @@ export default function ProductShowcase() {
                   src={IMAGES.modernInterior}
                   alt="Modern Home Interior"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.jpg";
+                    console.error(`Failed to load image: ${IMAGES.modernInterior}`);
+                  }}
                 />
               </div>
               <div className="p-6">
@@ -62,6 +66,10 @@ export default function ProductShowcase() {
                   src={IMAGES.commercialOffice}
                   alt="Commercial Office Space"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.jpg";
+                    console.error(`Failed to load image: ${IMAGES.commercialOffice}`);
+                  }}
                 />
               </div>
               <div className="p-6">
@@ -76,6 +84,10 @@ export default function ProductShowcase() {
                   src={IMAGES.exteriorProject}
                   alt="Exterior Transformation"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.jpg";
+                    console.error(`Failed to load image: ${IMAGES.exteriorProject}`);
+                  }}
                 />
               </div>
               <div className="p-6">
