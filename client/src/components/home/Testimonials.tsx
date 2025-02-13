@@ -52,7 +52,8 @@ export default function Testimonials() {
     loop: true,
     align: 'start',
     skipSnaps: false,
-    dragFree: isMobile, // Only allow dragging on mobile
+    draggable: isMobile, // Only allow dragging on mobile
+    dragFree: false
   });
 
   const scrollPrev = useCallback(() => {
