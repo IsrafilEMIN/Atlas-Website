@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
@@ -40,6 +39,7 @@ export default function Testimonials() {
     loop: true,
     align: 'start',
     skipSnaps: false,
+    draggable: window.innerWidth < 768,
   });
 
   const scrollPrev = useCallback(() => {
@@ -109,8 +109,8 @@ export default function Testimonials() {
             </Button>
           </div>
 
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
+          <div className="overflow-hidden select-text md:select-auto" ref={emblaRef}>
+            <div className="flex touch-pan-y md:touch-none">
               {testimonials.map((review, index) => (
                 <div
                   key={review.id}
@@ -122,7 +122,7 @@ export default function Testimonials() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <Card className="p-6 h-full flex flex-col justify-between bg-white border border-gray-200 hover:border-gray-300 transition-colors duration-200">
+                    <Card className="p-6 h-full flex flex-col justify-between bg-white border border-gray-200 hover:border-gray-300 transition-colors duration-200 select-text">
                       <div>
                         <div className="flex mb-4">
                           {[...Array(review.rating)].map((_, i) => (
