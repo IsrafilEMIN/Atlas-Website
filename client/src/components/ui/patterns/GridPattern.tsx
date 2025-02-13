@@ -1,9 +1,13 @@
 import { motion } from "framer-motion";
 
-export default function GridPattern() {
+interface GridPatternProps {
+  className?: string;
+}
+
+export default function GridPattern({ className }: GridPatternProps) {
   return (
     <svg
-      className="absolute inset-0 -z-10"
+      className={`absolute inset-0 -z-10 ${className || ''}`}
       width="100%"
       height="100%"
       xmlns="http://www.w3.org/2000/svg"
