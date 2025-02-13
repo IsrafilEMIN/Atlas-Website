@@ -57,7 +57,7 @@ export default function Booking() {
       // Updated to use /api/bookings (plural)
       const apiUrl = process.env.NODE_ENV === 'production' 
         ? '/api/bookings'  // Production URL
-        : 'https://painting-website-replit-git-dev-wip-kutluks-projects.vercel.app/api/bookings';  // Development URL
+        : 'http://localhost:3000/api/bookings';  // Development URL
 
       console.log('Sending request to:', apiUrl); // Debug log
 
