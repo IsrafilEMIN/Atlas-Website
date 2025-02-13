@@ -59,23 +59,16 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      // Log the data before submission for debugging
-      console.log('Form Data:', data);
-      console.log('Date:', bookingDate);
-
       const bookingData = {
-        customerName: String(data.customerName).trim(),
-        customerEmail: String(data.customerEmail).trim().toLowerCase(),
-        customerPhone: String(data.customerPhone).trim(),
-        serviceType: String(data.serviceType).trim(),
-        projectDetails: String(data.projectDetails).trim(),
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        customerPhone: data.customerPhone,
+        serviceType: data.serviceType,
+        projectDetails: data.projectDetails,
         bookingDateTime: bookingDate.toISOString(),
-        timeSlotId: 1,
-        status: 'pending' as const
+        timeSlotId: 1, // This should be replaced with actual time slot ID from backend
+        status: 'pending'
       };
-
-      // Log the final booking data for debugging
-      console.log('Booking Data:', bookingData);
 
       const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -87,7 +80,6 @@ export default function Booking() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Server Error Response:', errorData);
         throw new Error(errorData.message || 'Failed to book appointment');
       }
 
