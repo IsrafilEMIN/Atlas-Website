@@ -16,11 +16,42 @@ import {
 export default function Reviews() {
   const [ratingFilter, setRatingFilter] = useState<string>("all");
 
-  const { data: reviews = [] } = useQuery<Review[]>({
+  const { data: apiReviews = [] } = useQuery<Review[]>({
     queryKey: ['/api/reviews/published'],
   });
 
-  const filteredReviews = reviews.filter(review => 
+  // Import static testimonials from Home page
+  const staticTestimonials = [
+    {
+      id: 1,
+      customerName: "John Smith",
+      rating: 5,
+      comment: "Outstanding service! The team was professional and the results exceeded my expectations.",
+      serviceType: "Interior Painting",
+      createdAt: new Date("2024-01-15").toISOString()
+    },
+    {
+      id: 2,
+      customerName: "Sarah Johnson",
+      rating: 5,
+      comment: "Very pleased with the quality of work. They were punctual, clean, and detail-oriented.",
+      serviceType: "Exterior Painting",
+      createdAt: new Date("2024-01-20").toISOString()
+    },
+    {
+      id: 3,
+      customerName: "Michael Brown",
+      rating: 5,
+      comment: "Professional team, excellent communication, and beautiful results!",
+      serviceType: "Commercial Painting",
+      createdAt: new Date("2024-02-01").toISOString()
+    }
+  ];
+
+  // Combine both sources
+  const allReviews = [...staticTestimonials, ...apiReviews];
+
+  const filteredReviews = allReviews.filter(review => 
     ratingFilter === "all" ? true : review.rating === parseInt(ratingFilter)
   );
 
