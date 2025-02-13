@@ -43,9 +43,9 @@ export default function ProductShowcase() {
             {/* Project Cards */}
             <a 
               href="/gallery" 
-              className="block transition-transform hover:scale-[1.02] duration-300"
+              className="block transition-transform hover:scale-[1.02] duration-300 w-full"
             >
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full">
                 <div className="aspect-video bg-gray-100">
                   <img
                     src={IMAGES.modernInterior}
@@ -57,7 +57,7 @@ export default function ProductShowcase() {
                     }}
                   />
                 </div>
-                <div className="p-6">
+                <div className="p-6 flex flex-col h-[120px]">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Modern Home Interior</h3>
                   <p className="text-gray-600">Complete interior renovation with premium finish</p>
                 </div>
@@ -66,9 +66,9 @@ export default function ProductShowcase() {
 
             <a 
               href="/gallery" 
-              className="block transition-transform hover:scale-[1.02] duration-300"
+              className="block transition-transform hover:scale-[1.02] duration-300 w-full"
             >
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full">
                 <div className="aspect-video bg-gray-100">
                   <img
                     src={IMAGES.commercialOffice}
@@ -80,7 +80,7 @@ export default function ProductShowcase() {
                     }}
                   />
                 </div>
-                <div className="p-6">
+                <div className="p-6 flex flex-col h-[120px]">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Commercial Office Space</h3>
                   <p className="text-gray-600">Professional painting solution for corporate environment</p>
                 </div>
