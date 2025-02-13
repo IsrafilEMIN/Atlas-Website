@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import WavePattern from "../ui/patterns/WavePattern";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 // Update image paths to include the assets directory
 const IMAGES = {
@@ -42,7 +42,7 @@ export default function ProductShowcase() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center max-w-4xl mx-auto">
             {/* Project Cards */}
-            <Link href="/gallery" className="block w-full transition-transform hover:scale-105">
+            <Link to="/gallery" className="block w-full transition-transform hover:scale-105">
               <div className="bg-white rounded-lg overflow-hidden shadow-lg">
                 <div className="aspect-video bg-gray-100">
                   <img
@@ -62,7 +62,7 @@ export default function ProductShowcase() {
               </div>
             </Link>
 
-            <Link href="/gallery" className="block w-full transition-transform hover:scale-105">
+            <Link to="/gallery" className="block w-full transition-transform hover:scale-105">
               <div className="bg-white rounded-lg overflow-hidden shadow-lg">
                 <div className="aspect-video bg-gray-100">
                   <img
