@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import WavePattern from "../ui/patterns/WavePattern";
 
-// Import images directly from src/assets
-import modernInterior from "@/assets/modern-interior.jpg";
-import commercialOffice from "@/assets/commercial-office.jpg";
-import exteriorProject from "@/assets/exterior-project.jpg";
+// Import images using relative paths
+import modernInterior from "../../assets/projects/modern-interior.jpg";
+import commercialOffice from "../../assets/projects/commercial-office.jpg";
+import exteriorProject from "../../assets/projects/exterior-project.jpg";
 
 export default function ProductShowcase() {
   const [ref, inView] = useInView({
