@@ -56,6 +56,7 @@ export default function Testimonials() {
     loop: true,
     align: 'start',
     skipSnaps: false,
+    draggable: isMobile,
   });
 
   const scrollPrev = useCallback(() => {
@@ -125,17 +126,8 @@ export default function Testimonials() {
             </Button>
           </div>
 
-          <div className="overflow-hidden select-text" ref={emblaRef}>
-            <div className="flex md:transform-none md:!cursor-default" style={{ 
-              userSelect: 'text',
-              WebkitUserSelect: 'text',
-              touchAction: 'pan-y pinch-zoom',
-              cursor: 'grab',
-              '@media (min-width: 768px)': {
-                touchAction: 'none',
-                cursor: 'default'
-              }
-            }}>
+          <div className="overflow-hidden select-text md:select-auto" ref={emblaRef}>
+            <div className="flex touch-pan-y md:touch-none">
               {testimonials.map((review, index) => (
                 <div
                   key={review.id}
