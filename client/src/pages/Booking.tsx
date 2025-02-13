@@ -61,17 +61,14 @@ export default function Booking() {
         mode: 'cors',
         body: JSON.stringify({
           ...data,
-          timeSlotId: 1,
+          timeSlotId: 1, // This should be replaced with actual time slot ID from backend
           status: 'pending',
           createdAt: new Date().toISOString(),
         }),
       });
 
-      // Check if response has content before trying to parse JSON
-      const text = await response.text();
-      const errorData = text ? JSON.parse(text) : { message: 'No response from server' };
-
       if (!response.ok) {
+        const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to book appointment');
       }
 

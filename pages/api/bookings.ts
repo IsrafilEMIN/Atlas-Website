@@ -24,19 +24,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Run the middleware
   await runMiddleware(req, res, cors)
   
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' })
-  }
-
-  try {
-    // Handle the booking data here
-    const bookingData = req.body
-    
-    // TODO: Add your booking logic here (e.g., save to database)
-    
-    return res.status(200).json({ message: 'Booking created successfully' })
-  } catch (error) {
-    console.error('Booking error:', error)
-    return res.status(500).json({ message: 'Internal server error' })
-  }
+  // ... existing code ...
 } 
