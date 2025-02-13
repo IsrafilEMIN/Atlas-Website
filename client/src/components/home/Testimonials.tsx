@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
@@ -56,6 +55,7 @@ export default function Testimonials() {
     loop: true,
     align: 'start',
     skipSnaps: false,
+    containScroll: 'trimSnaps'
   });
 
   const scrollPrev = useCallback(() => {
@@ -125,12 +125,12 @@ export default function Testimonials() {
             </Button>
           </div>
 
-          <div className="overflow-hidden" ref={emblaRef}>
+          <div className="overflow-hidden px-4 md:px-12" ref={emblaRef}>
             <div className="flex">
               {testimonials.map((review, index) => (
                 <div
                   key={review.id}
-                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4"
+                  className="flex-[0_0_85%] min-w-0 sm:flex-[0_0_45%] lg:flex-[0_0_30%] pl-4"
                 >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
