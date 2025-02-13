@@ -54,7 +54,7 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      const response = await fetch('/api/bookings', {
+      const response = await fetch('/api/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,11 +67,12 @@ export default function Booking() {
         }),
       });
 
-      // Log the raw response for debugging
       const responseText = await response.text();
       console.log('Raw response:', responseText);
 
       if (!response.ok) {
+        console.error('Response status:', response.status);
+        console.error('Response status text:', response.statusText);
         let errorMessage = 'Failed to book appointment';
         try {
           const errorData = JSON.parse(responseText);
