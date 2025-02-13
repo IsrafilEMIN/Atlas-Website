@@ -1,9 +1,13 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import WavePattern from "../ui/patterns/WavePattern";
-import modernInteriorImg from "../../assets/projects/modern-interior.jpg";
-import commercialOfficeImg from "../../assets/projects/commercial-office.jpg";
-import exteriorProjectImg from "../../assets/projects/exterior-project.jpg";
+
+// Replace image imports with static URLs
+const IMAGES = {
+  modernInterior: "/images/projects/modern-interior.jpg",
+  commercialOffice: "/images/projects/commercial-office.jpg",
+  exteriorProject: "/images/projects/exterior-project.jpg",
+};
 
 export default function ProductShowcase() {
   const [ref, inView] = useInView({
@@ -41,7 +45,7 @@ export default function ProductShowcase() {
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-video bg-gray-100">
                 <img
-                  src={modernInteriorImg}
+                  src={IMAGES.modernInterior}
                   alt="Modern Home Interior"
                   className="w-full h-full object-cover"
                 />
@@ -55,7 +59,7 @@ export default function ProductShowcase() {
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-video bg-gray-100">
                 <img
-                  src={commercialOfficeImg}
+                  src={IMAGES.commercialOffice}
                   alt="Commercial Office Space"
                   className="w-full h-full object-cover"
                 />
@@ -69,7 +73,7 @@ export default function ProductShowcase() {
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-video bg-gray-100">
                 <img
-                  src={exteriorProjectImg}
+                  src={IMAGES.exteriorProject}
                   alt="Exterior Transformation"
                   className="w-full h-full object-cover"
                 />
