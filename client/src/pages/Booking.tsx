@@ -54,20 +54,16 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      // Updated to use /api/bookings (plural)
+      // Use relative URL instead of absolute URL
       const apiUrl = process.env.NODE_ENV === 'production' 
-        ? '/api/bookings'  // Production URL
-        : 'http://localhost:3000/api/bookings';  // Development URL
-
-      console.log('Sending request to:', apiUrl); // Debug log
+        ? '/api/booking'  // Production URL
+        : 'http://localhost:3000/api/booking';  // Development URL
 
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
         },
-        credentials: 'include', // Include cookies if needed
         body: JSON.stringify({
           ...data,
           bookingDateTime: bookingDate.toISOString(),
@@ -78,8 +74,6 @@ export default function Booking() {
 
       const responseText = await response.text();
       console.log('Raw response:', responseText);
-      console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers));
 
       if (!response.ok) {
         console.error('Response status:', response.status);
