@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
@@ -35,26 +36,10 @@ const testimonials = [
 
 export default function Testimonials() {
   const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Function to check screen width
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768); // Mobile = <768px
-    };
-
-    checkScreenSize(); // Check initially
-    window.addEventListener("resize", checkScreenSize); // Listen for resizes
-
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
-
-  // Initialize Embla with conditional draggable setting
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
     align: 'start',
     skipSnaps: false,
-    draggable: isMobile, // Enable drag only on mobile
   });
 
   const scrollPrev = useCallback(() => {
@@ -103,33 +88,27 @@ export default function Testimonials() {
         </motion.div>
 
         <div className="relative max-w-6xl mx-auto">
-          {/* Navigation Buttons - Visible on Desktop Only */}
-          {!isMobile && (
-            <>
-              <div className="absolute top-1/2 -translate-y-1/2 left-0 z-10 hidden md:block">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={scrollPrev}
-                  className="rounded-full bg-white border border-gray-200 text-black hover:bg-gray-100 -translate-x-16 hover:text-black"
-                >
-                  <ChevronLeft className="h-6 w-6" />
-                </Button>
-              </div>
-              <div className="absolute top-1/2 -translate-y-1/2 right-0 z-10 hidden md:block">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={scrollNext}
-                  className="rounded-full bg-white border border-gray-200 text-black hover:bg-gray-100 translate-x-16 hover:text-black"
-                >
-                  <ChevronRight className="h-6 w-6" />
-                </Button>
-              </div>
-            </>
-          )}
+          <div className="absolute top-1/2 -translate-y-1/2 left-0 z-10 hidden md:block">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={scrollPrev}
+              className="rounded-full bg-white border border-gray-200 text-black hover:bg-gray-100 -translate-x-16 hover:text-black"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+          </div>
+          <div className="absolute top-1/2 -translate-y-1/2 right-0 z-10 hidden md:block">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={scrollNext}
+              className="rounded-full bg-white border border-gray-200 text-black hover:bg-gray-100 translate-x-16 hover:text-black"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+          </div>
 
-          {/* Embla Carousel */}
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {testimonials.map((review, index) => (
