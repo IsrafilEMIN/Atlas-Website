@@ -16,13 +16,13 @@ export default function Footer() {
               Professional painting services for residential and commercial properties.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/people/Atlas-HomeServices-Inc/61572733726450/" className="text-gray-300 hover:text-white/60">
+              <a href="https://www.facebook.com/people/Atlas-HomeServices-Inc/61572733726450/" className="text-gray-300 hover:text-white/60" target="_blank" rel="noopener noreferrer">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white/60">
+              <a href="https://x.com/Atlas_Paint" className="text-gray-300 hover:text-white/60" target="_blank" rel="noopener noreferrer">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="https://www.instagram.com/atlas_homeservices/" className="text-gray-300 hover:text-white/60">
+              <a href="https://www.instagram.com/atlas_homeservices/" className="text-gray-300 hover:text-white/60" target="_blank" rel="noopener noreferrer">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
