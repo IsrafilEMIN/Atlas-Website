@@ -120,6 +120,8 @@ export default function Booking() {
                 showOutsideDays={false}
                 fromYear={2024}
                 toYear={2025}
+                disabled={{ before: new Date() }}
+                fromDate={new Date()}
                 classNames={{
                   root: "w-full",
                   months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -192,15 +194,29 @@ export default function Booking() {
                       const minute = i % 2 === 0 ? '00' : '30';
                       const ampm = hour >= 12 ? 'PM' : 'AM';
                       const hour12 = hour > 12 ? hour - 12 : hour;
-                      return `${hour12}:${minute} ${ampm}`;
-                    }).map((time) => (
+                      const timeStr = `${hour12}:${minute} ${ampm}`;
+                      
+                      // Check if the time slot is in the past
+                      const now = new Date();
+                      const selectedDate = date || new Date();
+                      const slotDate = new Date(selectedDate);
+                      slotDate.setHours(hour);
+                      slotDate.setMinutes(parseInt(minute));
+                      
+                      const isDisabled = slotDate < now;
+                      
+                      return { time: timeStr, isDisabled };
+                    }).map(({ time, isDisabled }) => (
                       <Button
                         key={time}
                         variant={timeSlot === time ? "default" : "outline"}
-                        onClick={() => setTimeSlot(time)}
+                        onClick={() => !isDisabled && setTimeSlot(time)}
+                        disabled={isDisabled}
                         className={
                           timeSlot === time
                             ? 'bg-black text-white hover:bg-black/90'
+                            : isDisabled
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                             : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                         }
                       >
