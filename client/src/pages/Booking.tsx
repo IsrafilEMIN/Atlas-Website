@@ -66,8 +66,19 @@ export default function Booking() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to book appointment');
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const text = await response.text(); // Get raw response text
+      console.log('Raw response:', text); // Debug log
+      
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('JSON parse error:', e);
+        console.error('Response text:', text);
+        throw e;
       }
 
       // Reset form
