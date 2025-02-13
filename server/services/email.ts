@@ -34,11 +34,13 @@ class ResendEmailService implements EmailService {
       <p>Dear ${booking.customerName},</p>
       <p>Thank you for booking our services. Here are your booking details:</p>
       <ul>
-        <li>Service: ${booking.serviceType}</li>
-        <li>Project Details: ${booking.projectDetails || 'Not provided'}</li>
-        <li>Status: ${booking.status}</li>
+        <li><strong>Service:</strong> ${booking.serviceType}</li>
+        <li><strong>Project Details:</strong> ${booking.projectDetails || 'Not provided'}</li>
+        <li><strong>Status:</strong> ${booking.status}</li>
+        <li><strong>Contact Number:</strong> ${booking.customerPhone}</li>
       </ul>
       <p>We'll be in touch shortly to confirm your appointment.</p>
+      <p>If you need to make any changes to your booking, please contact us at atlas.homeservices@icloud.com</p>
       <p>Best regards,<br>Atlas HomeServices Team</p>
     `;
 
@@ -51,15 +53,16 @@ class ResendEmailService implements EmailService {
       <h1>New Booking Received</h1>
       <p>A new booking has been received:</p>
       <ul>
-        <li>Customer: ${booking.customerName}</li>
-        <li>Email: ${booking.customerEmail}</li>
-        <li>Phone: ${booking.customerPhone}</li>
-        <li>Service: ${booking.serviceType}</li>
-        <li>Project Details: ${booking.projectDetails || 'Not provided'}</li>
+        <li><strong>Customer:</strong> ${booking.customerName}</li>
+        <li><strong>Email:</strong> ${booking.customerEmail}</li>
+        <li><strong>Phone:</strong> ${booking.customerPhone}</li>
+        <li><strong>Service:</strong> ${booking.serviceType}</li>
+        <li><strong>Project Details:</strong> ${booking.projectDetails || 'Not provided'}</li>
+        <li><strong>Status:</strong> ${booking.status}</li>
       </ul>
+      <p>Please review and contact the customer to confirm the appointment.</p>
     `;
 
-    // Send to admin email
     await this.sendEmail('atlas.homeservices@icloud.com', subject, html);
   }
 }
