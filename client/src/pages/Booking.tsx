@@ -59,7 +59,8 @@ export default function Booking() {
         },
         body: JSON.stringify({
           ...data,
-          timeSlotId: 1, // This should be replaced with actual time slot ID from backend
+          bookingDateTime: bookingDate.toISOString(),
+          timeSlotId: 1,
           status: 'pending',
           createdAt: new Date().toISOString(),
         }),
@@ -69,12 +70,12 @@ export default function Booking() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const text = await response.text(); // Get raw response text
-      console.log('Raw response:', text); // Debug log
+      const text = await response.text();
+      console.log('Raw response:', text);
       
-      let data;
+      let responseData;
       try {
-        data = JSON.parse(text);
+        responseData = JSON.parse(text);
       } catch (e) {
         console.error('JSON parse error:', e);
         console.error('Response text:', text);
