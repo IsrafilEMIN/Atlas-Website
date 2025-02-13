@@ -18,11 +18,6 @@ export default function Booking() {
   const currentYear = new Date().getFullYear();
   const { toast } = useToast();
 
-  // Add this function to disable past dates
-  const disabledDays = {
-    before: new Date(),
-  };
-
   const form = useForm({
     resolver: zodResolver(insertBookingSchema),
     defaultValues: {
@@ -121,7 +116,6 @@ export default function Booking() {
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                disabled={disabledDays}
                 className="rounded-md border"
                 showOutsideDays={false}
                 fromYear={2024}
@@ -198,34 +192,21 @@ export default function Booking() {
                       const minute = i % 2 === 0 ? '00' : '30';
                       const ampm = hour >= 12 ? 'PM' : 'AM';
                       const hour12 = hour > 12 ? hour - 12 : hour;
-                      const timeString = `${hour12}:${minute} ${ampm}`;
-
-                      // Add this block to disable past time slots for today
-                      const isDisabled = () => {
-                        if (date?.toDateString() === new Date().toDateString()) {
-                          const currentHour = new Date().getHours();
-                          return hour <= currentHour;
+                      return `${hour12}:${minute} ${ampm}`;
+                    }).map((time) => (
+                      <Button
+                        key={time}
+                        variant={timeSlot === time ? "default" : "outline"}
+                        onClick={() => setTimeSlot(time)}
+                        className={
+                          timeSlot === time
+                            ? 'bg-black text-white hover:bg-black/90'
+                            : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                         }
-                        return false;
-                      };
-
-                      return (
-                        <Button
-                          key={timeString}
-                          variant={timeSlot === timeString ? "default" : "outline"}
-                          onClick={() => setTimeSlot(timeString)}
-                          disabled={isDisabled()}
-                          className={`
-                            ${timeSlot === timeString
-                              ? 'bg-black text-white hover:bg-black/90'
-                              : 'bg-white text-black border-gray-300 hover:bg-gray-100'}
-                            ${isDisabled() && 'opacity-50 cursor-not-allowed'}
-                          `}
-                        >
-                          {timeString}
-                        </Button>
-                      );
-                    })}
+                      >
+                        {time}
+                      </Button>
+                    ))}
                   </div>
                 </div>
               )}
