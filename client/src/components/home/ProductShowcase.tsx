@@ -42,7 +42,7 @@ export default function ProductShowcase() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center max-w-4xl mx-auto">
             {/* Project Cards */}
             <a 
-              href="/projects/modern-home-interior" 
+              href="/gallery" 
               className="block transition-transform hover:scale-[1.02] duration-300"
             >
               <div className="bg-white rounded-lg overflow-hidden shadow-lg">
@@ -65,7 +65,7 @@ export default function ProductShowcase() {
             </a>
 
             <a 
-              href="/projects/commercial-office" 
+              href="/gallery" 
               className="block transition-transform hover:scale-[1.02] duration-300"
             >
               <div className="bg-white rounded-lg overflow-hidden shadow-lg">
