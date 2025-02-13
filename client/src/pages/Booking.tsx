@@ -47,35 +47,27 @@ export default function Booking() {
 
     try {
       // Convert date and timeSlot to a proper timestamp for the backend
-      const [time, period] = timeSlot.split(' ');
-      const [hours, minutes] = time.split(':');
+      const [hours, minutes] = timeSlot.split(':')[0].split(' ')[0].split(':');
+      const isPM = timeSlot.includes('PM');
       let hour = parseInt(hours);
-      
-      // Convert to 24-hour format
-      if (period === 'PM' && hour !== 12) hour += 12;
-      if (period === 'AM' && hour === 12) hour = 0;
+      if (isPM && hour !== 12) hour += 12;
+      if (!isPM && hour === 12) hour = 0;
 
       const bookingDate = new Date(date);
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
-
-      const bookingData = {
-        customerName: data.customerName,
-        customerEmail: data.customerEmail,
-        customerPhone: data.customerPhone,
-        serviceType: data.serviceType,
-        projectDetails: data.projectDetails,
-        bookingDateTime: bookingDate.toISOString(),
-        timeSlotId: 1, // This should be replaced with actual time slot ID from backend
-        status: 'pending'
-      };
 
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookingData),
+        body: JSON.stringify({
+          ...data,
+          timeSlotId: 1, // This should be replaced with actual time slot ID from backend
+          status: 'pending',
+          createdAt: new Date().toISOString(),
+        }),
       });
 
       if (!response.ok) {
