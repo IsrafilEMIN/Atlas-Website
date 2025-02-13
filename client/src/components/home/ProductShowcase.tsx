@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import WavePattern from "../ui/patterns/WavePattern";
-import { Link } from "react-router-dom";
 
 // Update image paths to include the assets directory
 const IMAGES = {
@@ -40,47 +39,43 @@ export default function ProductShowcase() {
           transition={{ duration: 0.8 }}
           className="relative mx-auto max-w-5xl"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Project Cards */}
-            <Link to="/gallery" className="block w-full transition-transform hover:scale-105">
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-                <div className="aspect-video bg-gray-100">
-                  <img
-                    src={IMAGES.modernInterior}
-                    alt="Modern Home Interior"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "/placeholder.jpg";
-                      console.error(`Failed to load image: ${IMAGES.modernInterior}`);
-                    }}
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Modern Home Interior</h3>
-                  <p className="text-gray-600">Complete interior renovation with premium finish</p>
-                </div>
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="aspect-video bg-gray-100">
+                <img
+                  src={IMAGES.modernInterior}
+                  alt="Modern Home Interior"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.jpg";
+                    console.error(`Failed to load image: ${IMAGES.modernInterior}`);
+                  }}
+                />
               </div>
-            </Link>
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Modern Home Interior</h3>
+                <p className="text-gray-600">Complete interior renovation with premium finish</p>
+              </div>
+            </div>
 
-            <Link to="/gallery" className="block w-full transition-transform hover:scale-105">
-              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-                <div className="aspect-video bg-gray-100">
-                  <img
-                    src={IMAGES.commercialOffice}
-                    alt="Commercial Office Space"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "/placeholder.jpg";
-                      console.error(`Failed to load image: ${IMAGES.commercialOffice}`);
-                    }}
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Commercial Office Space</h3>
-                  <p className="text-gray-600">Professional painting solution for corporate environment</p>
-                </div>
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+              <div className="aspect-video bg-gray-100">
+                <img
+                  src={IMAGES.commercialOffice}
+                  alt="Commercial Office Space"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.jpg";
+                    console.error(`Failed to load image: ${IMAGES.commercialOffice}`);
+                  }}
+                />
               </div>
-            </Link>
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Commercial Office Space</h3>
+                <p className="text-gray-600">Professional painting solution for corporate environment</p>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
