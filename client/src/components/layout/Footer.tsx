@@ -84,7 +84,9 @@ export default function Footer() {
               </li>
               <li className="flex items-center text-gray-300">
                 <Mail className="w-5 h-5 mr-2" />
-                <span>atlas.homeservices@icloud.com</span>
+                <a href="mailto:atlas.homeservices@icloud.com" className="hover:underline">
+                  atlas.homeservices@icloud.com
+                </a>
               </li>
               <li className="flex items-center text-gray-300">
                 <MapPin className="w-5 h-5 mr-2" />
