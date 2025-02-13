@@ -31,6 +31,22 @@ const testimonials = [
     comment: "Professional team, excellent communication, and beautiful results!",
     serviceType: "Commercial Painting",
     createdAt: new Date("2024-02-01").toISOString()
+  },
+  {
+    id: 4,
+    customerName: "Aliye Yiming",
+    rating: 4,
+    comment: "Very good service, they are very professional and the results are beautiful.",
+    serviceType: "Commercial Painting",
+    createdAt: new Date("2024-02-02").toISOString()
+  },
+  {
+    id: 5,
+    customerName: "Saadet Kutluk",
+    rating: 3,
+    comment: "Customer service is good, but the quality of the work is not good.",
+    serviceType: "Commercial Painting",
+    createdAt: new Date("2024-02-03").toISOString()
   }
 ];
 
