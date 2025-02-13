@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import WavePattern from "../ui/patterns/WavePattern";
+import modernInteriorImg from "../../assets/projects/modern-interior.jpg";
+import commercialOfficeImg from "../../assets/projects/commercial-office.jpg";
+import exteriorProjectImg from "../../assets/projects/exterior-project.jpg";
 
 export default function ProductShowcase() {
   const [ref, inView] = useInView({
@@ -36,7 +39,13 @@ export default function ProductShowcase() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Project Cards */}
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <div className="aspect-video bg-gray-100" />
+              <div className="aspect-video bg-gray-100">
+                <img
+                  src={modernInteriorImg}
+                  alt="Modern Home Interior"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Modern Home Interior</h3>
                 <p className="text-gray-600">Complete interior renovation with premium finish</p>
@@ -44,7 +53,13 @@ export default function ProductShowcase() {
             </div>
 
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <div className="aspect-video bg-gray-100" />
+              <div className="aspect-video bg-gray-100">
+                <img
+                  src={commercialOfficeImg}
+                  alt="Commercial Office Space"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Commercial Office Space</h3>
                 <p className="text-gray-600">Professional painting solution for corporate environment</p>
@@ -52,7 +67,13 @@ export default function ProductShowcase() {
             </div>
 
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <div className="aspect-video bg-gray-100" />
+              <div className="aspect-video bg-gray-100">
+                <img
+                  src={exteriorProjectImg}
+                  alt="Exterior Transformation"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Exterior Transformation</h3>
                 <p className="text-gray-600">Complete exterior makeover with weather-resistant coating</p>
