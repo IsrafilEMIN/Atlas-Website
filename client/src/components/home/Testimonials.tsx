@@ -126,11 +126,15 @@ export default function Testimonials() {
           </div>
 
           <div className="overflow-hidden select-text" ref={emblaRef}>
-            <div className={`flex ${!isMobile ? 'md:transform-none md:!cursor-default' : ''}`} style={{ 
-              userSelect: isMobile ? 'text' : 'none',
-              WebkitUserSelect: isMobile ? 'text' : 'none',
-              touchAction: isMobile ? 'pan-y pinch-zoom' : 'none',
-              cursor: isMobile ? 'grab' : 'default'
+            <div className="flex md:transform-none md:!cursor-default" style={{ 
+              userSelect: 'text',
+              WebkitUserSelect: 'text',
+              touchAction: 'pan-y pinch-zoom',
+              cursor: 'grab',
+              '@media (min-width: 768px)': {
+                touchAction: 'none',
+                cursor: 'default'
+              }
             }}>
               {testimonials.map((review, index) => (
                 <div
