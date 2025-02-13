@@ -5,8 +5,7 @@ import WavePattern from "../ui/patterns/WavePattern";
 // Update image paths to include the assets directory
 const IMAGES = {
   modernInterior: "/assets/projects/modern-interior.jpg",
-  commercialOffice: "/assets/projects/commercial-office.jpg",
-  exteriorProject: "/assets/projects/exterior-project.jpg",
+  commercialOffice: "/assets/projects/commercial-office.jpg"
 };
 
 export default function ProductShowcase() {
@@ -75,24 +74,6 @@ export default function ProductShowcase() {
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Commercial Office Space</h3>
                 <p className="text-gray-600">Professional painting solution for corporate environment</p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-              <div className="aspect-video bg-gray-100">
-                <img
-                  src={IMAGES.exteriorProject}
-                  alt="Exterior Transformation"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = "/placeholder.jpg";
-                    console.error(`Failed to load image: ${IMAGES.exteriorProject}`);
-                  }}
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Exterior Transformation</h3>
-                <p className="text-gray-600">Complete exterior makeover with weather-resistant coating</p>
               </div>
             </div>
           </div>
