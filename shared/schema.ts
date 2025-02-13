@@ -45,9 +45,11 @@ export const insertTimeSlotSchema = createInsertSchema(timeSlots).omit({
   id: true,
 });
 
-export const insertBookingSchema = createInsertSchema(bookings).omit({
-  id: true,
-  createdAt: true,
+export const insertBookingSchema = z.object({
+  // Add your booking fields here, for example:
+  date: z.string(),
+  name: z.string(),
+  email: z.string().email()
 });
 
 export const insertNotificationSchema = createInsertSchema(notifications).omit({
