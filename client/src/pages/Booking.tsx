@@ -54,7 +54,12 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      const response = await fetch('/api/booking', {
+      // Use relative URL instead of absolute URL
+      const apiUrl = process.env.NODE_ENV === 'production' 
+        ? '/api/booking'  // Production URL
+        : 'http://localhost:3000/api/booking';  // Development URL
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
