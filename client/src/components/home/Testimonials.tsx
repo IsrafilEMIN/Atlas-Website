@@ -137,7 +137,7 @@ export default function Testimonials() {
 
           {/* Embla Carousel */}
           <div
-            className={`overflow-hidden ${!isMobile ? 'touch-none' : ''}`} 
+            className={`overflow-hidden ${!isMobile ? 'pointer-events-none select-none' : ''}`} 
             ref={emblaRef}
           >
             <div className="flex">
@@ -152,8 +152,7 @@ export default function Testimonials() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    {/* Text remains selectable here */}
-                    <Card className="p-6 h-full flex flex-col justify-between bg-white border border-gray-200 hover:border-gray-300 transition-colors duration-200 select-text">
+                    <Card className="p-6 h-full flex flex-col justify-between bg-white border border-gray-200 hover:border-gray-300 transition-colors duration-200">
                       <div>
                         <div className="flex mb-4">
                           {[...Array(review.rating)].map((_, i) => (
