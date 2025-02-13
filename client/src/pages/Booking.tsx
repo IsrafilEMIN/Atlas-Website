@@ -65,14 +65,21 @@ export default function Booking() {
       // Log the request data
       console.log('Sending booking data:', bookingData);
 
-      // Use relative path instead of full URL
-      const response = await fetch('/api/bookings', {
+      // First, try to get the API URL
+      const apiBaseUrl = window.location.origin;
+      console.log('API Base URL:', apiBaseUrl);
+
+      const response = await fetch(`${apiBaseUrl}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(bookingData),
       });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers));
+      console.log('Request URL:', response.url);
 
       // Get the raw response text first
       const responseText = await response.text();
@@ -85,13 +92,16 @@ export default function Booking() {
           responseData = JSON.parse(responseText);
         } catch (e) {
           console.error('Failed to parse response as JSON:', responseText);
+          // Try to make a test GET request to see if the endpoint exists
+          const testResponse = await fetch(`${apiBaseUrl}/api/bookings`);
+          console.log('Test GET request status:', testResponse.status);
         }
       }
 
       if (!response.ok) {
         throw new Error(
           responseData?.message || 
-          `Request failed with status ${response.status}. Please try again later.`
+          `Request failed with status ${response.status}. Please ensure the API endpoint is configured to accept POST requests.`
         );
       }
 
