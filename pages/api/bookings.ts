@@ -1,42 +1,34 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import Cors from 'cors'
-
-// Initialize the cors middleware
-const cors = Cors({
-  methods: ['GET', 'POST', 'HEAD', 'OPTIONS'],
-  origin: ['https://atlas-paint.com', 'http://localhost:3000'], // Add any other allowed origins
-  credentials: true,
-})
-
-// Helper method to wait for a middleware to execute before continuing
-function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result: any) => {
-      if (result instanceof Error) {
-        return reject(result)
-      }
-      return resolve(result)
-    })
-  })
-}
+import { insertBookingSchema } from '@/shared/schema'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Run the middleware
-  await runMiddleware(req, res, cors)
-  
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' })
   }
 
   try {
-    // Handle the booking data here
-    const bookingData = req.body
+    const booking = req.body
     
-    // TODO: Add your booking logic here (e.g., save to database)
-    
-    return res.status(200).json({ message: 'Booking created successfully' })
+    // Validate the booking data
+    const validatedData = insertBookingSchema.parse(booking)
+
+    // Here you would typically:
+    // 1. Save the booking to your database
+    // 2. Send confirmation emails
+    // 3. Handle any other business logic
+
+    // For now, we'll just return a success response
+    return res.status(200).json({ 
+      success: true, 
+      message: 'Booking created successfully',
+      data: validatedData 
+    })
+
   } catch (error) {
     console.error('Booking error:', error)
-    return res.status(500).json({ message: 'Internal server error' })
+    return res.status(400).json({ 
+      success: false, 
+      message: error instanceof Error ? error.message : 'Failed to create booking' 
+    })
   }
 } 
