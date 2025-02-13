@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
@@ -35,24 +36,10 @@ const testimonials = [
 
 export default function Testimonials() {
   const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px is typical md breakpoint
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
     align: 'start',
     skipSnaps: false,
-    dragFree: isMobile, // Only allow dragging on mobile
   });
 
   const scrollPrev = useCallback(() => {
