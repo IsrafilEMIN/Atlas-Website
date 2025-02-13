@@ -65,9 +65,9 @@ export default function Booking() {
         }),
       });
 
+      const responseData = await response.json();
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to book appointment');
+        throw new Error(responseData.message || 'Failed to book appointment');
       }
 
       // Reset form
