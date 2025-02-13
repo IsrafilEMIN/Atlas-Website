@@ -52,11 +52,13 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      const response = await fetch('/api/bookings', {
+      const response = await fetch('https://painting-website-replit-git-dev-wip-kuluks-projects.vercel.app/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
+        mode: 'cors',
         body: JSON.stringify({
           ...data,
           timeSlotId: 1, // This should be replaced with actual time slot ID from backend
