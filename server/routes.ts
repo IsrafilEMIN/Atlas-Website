@@ -7,8 +7,17 @@ import { emailService } from "./services/email";
 import { and, eq, gte } from "drizzle-orm";
 
 export function registerRoutes(app: Express): Server {
+  // Enable CORS for the booking route
+  app.options('/api/bookings', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.sendStatus(200);
+  });
+
   // Booking route
   app.post('/api/bookings', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
     try {
       // Validate request body
       const validatedData = insertBookingSchema.parse(req.body);
