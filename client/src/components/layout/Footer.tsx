@@ -1,8 +1,17 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 
 export default function Footer() {
+  const [location] = useLocation();
+
+  const handleClick = (path: string) => (e: React.MouseEvent) => {
+    if (location === path) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="bg-black border-t border-gray-200">
       <div className="container mx-auto px-6 py-12">
@@ -34,32 +43,32 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/">
-                  <a className="text-gray-300 hover:underline">Home</a>
+                  <a className="text-gray-300 hover:underline" onClick={handleClick("/")}>Home</a>
                 </Link>
               </li>
               <li>
                 <Link href="/services">
-                  <a className="text-gray-300 hover:underline">Services</a>
+                  <a className="text-gray-300 hover:underline" onClick={handleClick("/services")}>Services</a>
                 </Link>
               </li>
               <li>
                 <Link href="/pricing">
-                  <a className="text-gray-300 hover:underline">Pricing</a>
+                  <a className="text-gray-300 hover:underline" onClick={handleClick("/pricing")}>Pricing</a>
                 </Link>
               </li>
               <li>
                 <Link href="/gallery">
-                  <a className="text-gray-300 hover:underline">Gallery</a>
+                  <a className="text-gray-300 hover:underline" onClick={handleClick("/gallery")}>Gallery</a>
                 </Link>
               </li>
               <li>
                 <Link href="/contact">
-                  <a className="text-gray-300 hover:underline">Contact</a>
+                  <a className="text-gray-300 hover:underline" onClick={handleClick("/contact")}>Contact</a>
                 </Link>
               </li>
               <li>
                 <Link href="/booking">
-                  <a className="text-gray-300 hover:underline">Book Now</a>
+                  <a className="text-gray-300 hover:underline" onClick={handleClick("/booking")}>Book Now</a>
                 </Link>
               </li>
             </ul>
