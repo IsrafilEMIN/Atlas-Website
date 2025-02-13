@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
@@ -31,6 +30,22 @@ const testimonials = [
     comment: "Professional team, excellent communication, and beautiful results!",
     serviceType: "Commercial Painting",
     createdAt: new Date("2024-02-01").toISOString()
+  },
+  {
+    id: 4,
+    customerName: "Aliye Yiming",
+    rating: 4,
+    comment: "Very good service, they are very professional and the results are beautiful.",
+    serviceType: "Commercial Painting",
+    createdAt: new Date("2024-02-02").toISOString()
+  },
+  {
+    id: 5,
+    customerName: "Saadet Kutluk",
+    rating: 3,
+    comment: "Customer service is good, but the quality of the work is not good.",
+    serviceType: "Commercial Painting",
+    createdAt: new Date("2024-02-03").toISOString()
   }
 ];
 
@@ -38,8 +53,9 @@ export default function Testimonials() {
   const [mounted, setMounted] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
-    align: 'start',
+    align: 'center',
     skipSnaps: false,
+    containScroll: 'trimSnaps'
   });
 
   const scrollPrev = useCallback(() => {
@@ -52,14 +68,6 @@ export default function Testimonials() {
 
   useEffect(() => {
     setMounted(true);
-
-    if (emblaApi) {
-      const interval = setInterval(() => {
-        emblaApi.scrollNext();
-      }, 5000);
-
-      return () => clearInterval(interval);
-    }
   }, [emblaApi]);
 
   if (!mounted) {
@@ -109,12 +117,12 @@ export default function Testimonials() {
             </Button>
           </div>
 
-          <div className="overflow-hidden" ref={emblaRef}>
+          <div className="overflow-hidden px-4 md:px-24" ref={emblaRef}>
             <div className="flex">
               {testimonials.map((review, index) => (
                 <div
                   key={review.id}
-                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4"
+                  className="flex-[0_0_85%] min-w-0 sm:flex-[0_0_45%] lg:flex-[0_0_30%] pl-4"
                 >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
