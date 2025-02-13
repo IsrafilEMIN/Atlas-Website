@@ -54,44 +54,47 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      // Updated to use /api/bookings (plural)
-      const apiUrl = process.env.NODE_ENV === 'production' 
-        ? '/api/bookings'  // Production URL
-        : 'https://painting-website-replit-git-dev-wip-kutluks-projects.vercel.app/api/bookings';  // Development URL
+      // Create the request payload
+      const bookingData = {
+        ...data,
+        bookingDateTime: bookingDate.toISOString(),
+        timeSlotId: 1,
+        status: 'pending'
+      };
 
-      console.log('Sending request to:', apiUrl); // Debug log
+      // Log the request data
+      console.log('Sending booking data:', bookingData);
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
         },
-        credentials: 'include', // Include cookies if needed
-        body: JSON.stringify({
-          ...data,
-          bookingDateTime: bookingDate.toISOString(),
-          timeSlotId: 1,
-          status: 'pending'
-        }),
+        body: JSON.stringify(bookingData),
       });
 
-      const responseText = await response.text();
-      console.log('Raw response:', responseText);
       console.log('Response status:', response.status);
       console.log('Response headers:', Object.fromEntries(response.headers));
 
-      if (!response.ok) {
-        console.error('Response status:', response.status);
-        console.error('Response status text:', response.statusText);
-        let errorMessage = 'Failed to book appointment';
+      // Get the raw response text first
+      const responseText = await response.text();
+      console.log('Raw response text:', responseText);
+
+      // Only try to parse JSON if we actually got a response
+      let responseData;
+      if (responseText) {
         try {
-          const errorData = JSON.parse(responseText);
-          errorMessage = errorData.message || errorMessage;
+          responseData = JSON.parse(responseText);
         } catch (e) {
-          console.error('Error parsing response:', e);
+          console.error('Failed to parse response as JSON:', responseText);
         }
-        throw new Error(errorMessage);
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          responseData?.message || 
+          `Request failed with status ${response.status}`
+        );
       }
 
       // Reset form
