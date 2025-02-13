@@ -123,8 +123,11 @@ export default function Testimonials() {
             </Button>
           </div>
 
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
+          <div 
+            className={`overflow-hidden ${!isMobile ? 'pointer-events-none' : ''}`} 
+            ref={emblaRef}
+          >
+            <div className={`flex ${!isMobile ? 'pointer-events-auto' : ''}`}>
               {testimonials.map((review, index) => (
                 <div
                   key={review.id}
