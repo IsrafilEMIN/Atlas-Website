@@ -80,11 +80,15 @@ export default function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center text-gray-300">
                 <Phone className="w-5 h-5 mr-2" />
-                <span>(647) 916-0826</span>
+                <a href="tel:+16479160826" className="hover:underline">
+                  (647) 916-0826
+                </a>
               </li>
               <li className="flex items-center text-gray-300">
                 <Mail className="w-5 h-5 mr-2" />
-                <span>atlas.homeservices@icloud.com</span>
+                <a href="mailto:atlas.homeservices@icloud.com" className="hover:underline">
+                  atlas.homeservices@icloud.com
+                </a>
               </li>
               <li className="flex items-center text-gray-300">
                 <MapPin className="w-5 h-5 mr-2" />
