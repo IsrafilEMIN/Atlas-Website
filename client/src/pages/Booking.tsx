@@ -17,6 +17,7 @@ export default function Booking() {
   const [isYearSelectOpen, setIsYearSelectOpen] = useState(false);
   const currentYear = new Date().getFullYear();
   const { toast } = useToast();
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
 
   const form = useForm({
     resolver: zodResolver(insertBookingSchema),
@@ -96,6 +97,18 @@ export default function Booking() {
     setIsYearSelectOpen(false);
   };
 
+  const fetchBookedSlots = async (selectedDate: Date) => {
+    try {
+      const response = await fetch(`/api/bookings/slots?date=${selectedDate.toISOString()}`);
+      if (response.ok) {
+        const data = await response.json();
+        setBookedSlots(data.bookedSlots);
+      }
+    } catch (error) {
+      console.error('Error fetching booked slots:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-6 pt-32 pb-16 relative">
@@ -115,7 +128,15 @@ export default function Booking() {
               <Calendar
                 mode="single"
                 selected={date}
-                onSelect={setDate}
+                onSelect={(newDate) => {
+                  setDate(newDate);
+                  if (newDate) {
+                    fetchBookedSlots(newDate);
+                  }
+                }}
+                disabled={(date) => {
+                  return date < new Date(new Date().setHours(0, 0, 0, 0));
+                }}
                 className="rounded-md border"
                 showOutsideDays={false}
                 fromYear={2024}
@@ -192,21 +213,32 @@ export default function Booking() {
                       const minute = i % 2 === 0 ? '00' : '30';
                       const ampm = hour >= 12 ? 'PM' : 'AM';
                       const hour12 = hour > 12 ? hour - 12 : hour;
-                      return `${hour12}:${minute} ${ampm}`;
-                    }).map((time) => (
-                      <Button
-                        key={time}
-                        variant={timeSlot === time ? "default" : "outline"}
-                        onClick={() => setTimeSlot(time)}
-                        className={
-                          timeSlot === time
-                            ? 'bg-black text-white hover:bg-black/90'
-                            : 'bg-white text-black border-gray-300 hover:bg-gray-100'
-                        }
-                      >
-                        {time}
-                      </Button>
-                    ))}
+                      const timeString = `${hour12}:${minute} ${ampm}`;
+                      
+                      const slotDate = new Date(date);
+                      slotDate.setHours(hour, parseInt(minute), 0, 0);
+                      const isToday = new Date().toDateString() === date.toDateString();
+                      const isPastTime = isToday && slotDate < new Date();
+                      const isBooked = bookedSlots.includes(
+                        `${date.toISOString().split('T')[0]}-${hour.toString().padStart(2, '0')}:${minute}`
+                      );
+                      const isDisabled = isPastTime || isBooked;
+
+                      return (
+                        <Button
+                          key={timeString}
+                          variant={timeSlot === timeString ? "default" : "outline"}
+                          onClick={() => setTimeSlot(timeString)}
+                          disabled={isDisabled}
+                          className={`
+                            ${timeSlot === timeString ? 'bg-black text-white hover:bg-black/90' : 'bg-white text-black border-gray-300 hover:bg-gray-100'}
+                            ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
+                          `}
+                        >
+                          {timeString}
+                        </Button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
