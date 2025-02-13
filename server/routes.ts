@@ -4,20 +4,10 @@ import { storage } from "./storage";
 import { insertBookingSchema } from "@shared/schema";
 import { z } from "zod";
 import { emailService } from "./services/email";
-import { and, eq, gte } from "drizzle-orm";
 
 export function registerRoutes(app: Express): Server {
-  // Enable CORS for the booking route
-  app.options('/api/bookings', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.sendStatus(200);
-  });
-
   // Booking route
   app.post('/api/bookings', async (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
     try {
       // Validate request body
       const validatedData = insertBookingSchema.parse(req.body);
@@ -63,23 +53,6 @@ export function registerRoutes(app: Express): Server {
         success: false, 
         message: 'Failed to create booking' 
       });
-    }
-  });
-
-  // Get available time slots
-  app.get('/api/timeslots', async (req, res) => {
-    try {
-      const date = req.query.date as string;
-      if (!date) {
-        return res.status(400).json({ success: false, message: 'Date is required' });
-      }
-
-      const selectedDate = new Date(date);
-      const slots = await storage.getTimeSlots(selectedDate);
-      res.json({ success: true, slots });
-    } catch (error) {
-      console.error('Error fetching time slots:', error);
-      res.status(500).json({ success: false, message: 'Failed to fetch time slots' });
     }
   });
 
