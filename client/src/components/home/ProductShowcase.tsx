@@ -39,7 +39,7 @@ export default function ProductShowcase() {
           transition={{ duration: 0.8 }}
           className="relative mx-auto max-w-5xl"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center max-w-4xl mx-auto">
             {/* Project Cards */}
             <div className="bg-white rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-video bg-gray-100">
