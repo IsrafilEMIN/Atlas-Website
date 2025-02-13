@@ -38,7 +38,7 @@ export function registerRoutes(app: Express): Server {
         await storage.updateNotification(booking.id, 'failed');
       }
 
-      res.status(201).json({ success: true, booking }); //Improved response code and included booking data
+      res.json({ success: true, booking });
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
@@ -51,7 +51,7 @@ export function registerRoutes(app: Express): Server {
       console.error('Booking error:', error);
       res.status(500).json({ 
         success: false, 
-        message: error instanceof Error ? error.message : 'Internal server error'
+        message: 'Failed to create booking' 
       });
     }
   });
