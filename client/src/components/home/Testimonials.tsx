@@ -124,7 +124,7 @@ export default function Testimonials() {
           </div>
 
           <div 
-            className={`overflow-hidden ${!isMobile ? 'pointer-events-none' : ''}`} 
+            className={`overflow-hidden ${!isMobile ? 'pointer-events-none touch-none select-none' : ''}`} 
             ref={emblaRef}
           >
             <div className={`flex ${!isMobile ? 'pointer-events-auto' : ''}`}>
