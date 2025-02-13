@@ -25,6 +25,7 @@ export default function Header() {
 
   const isActive = (path: string) => location === path;
 
+  //
   // Navigation link styling - updated with smaller text
   const linkStyle = (path: string) => 
     `cursor-pointer transition-colors duration-200 text-sm font-medium font-['SF Pro Display',-apple-system,BlinkMacSystemFont,system-ui,sans-serif] ${
