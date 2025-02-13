@@ -41,35 +41,16 @@ export default function Booking() {
     }
 
     try {
-      // Improved time slot parsing and validation
-      const timeMatch = timeSlot.match(/(\d+):(\d+)\s*(AM|PM)/i);
-      if (!timeMatch) {
-        throw new Error("Invalid time format");
-      }
-
-      let [_, hours, minutes, period] = timeMatch;
+      // Convert date and timeSlot to a proper timestamp for the backend
+      const [hours, minutes] = timeSlot.split(':')[0].split(' ')[0].split(':');
+      const isPM = timeSlot.includes('PM');
       let hour = parseInt(hours);
-      
-      // Convert to 24-hour format
-      if (period.toUpperCase() === 'PM' && hour !== 12) {
-        hour += 12;
-      } else if (period.toUpperCase() === 'AM' && hour === 12) {
-        hour = 0;
-      }
+      if (isPM && hour !== 12) hour += 12;
+      if (!isPM && hour === 12) hour = 0;
 
-      // Validate hours and minutes
-      if (hour < 0 || hour > 23 || parseInt(minutes) < 0 || parseInt(minutes) > 59) {
-        throw new Error("Invalid time values");
-      }
-
-      // Create booking date with proper validation
       const bookingDate = new Date(date);
-      bookingDate.setHours(hour, parseInt(minutes), 0, 0);
-
-      // Validate the resulting date
-      if (isNaN(bookingDate.getTime())) {
-        throw new Error("Invalid booking date/time");
-      }
+      bookingDate.setHours(hour);
+      bookingDate.setMinutes(parseInt(minutes));
 
       const response = await fetch('/api/bookings', {
         method: 'POST',
