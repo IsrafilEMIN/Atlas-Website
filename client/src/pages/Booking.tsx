@@ -62,48 +62,37 @@ export default function Booking() {
       const bookingDate = new Date(date);
       bookingDate.setHours(hour, parseInt(minutes), 0, 0);
 
-      // Create the request payload
-      const bookingData = {
-        ...data,
-        bookingDate: bookingDate.toISOString(),
-        timeSlot: timeSlot,
-        status: 'pending',
-        createdAt: new Date().toISOString(),
-      };
-
-      // Log the payload for debugging
-      console.log('Sending booking data:', bookingData);
-
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookingData),
+        body: JSON.stringify({
+          ...data,
+          bookingDate: bookingDate.toISOString(),
+          timeSlot: timeSlot,
+          status: 'pending',
+          createdAt: new Date().toISOString(),
+        }),
       });
 
-      // Log the raw response for debugging
-      console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
       if (!response.ok) {
-        const responseText = await response.text();
-        console.log('Error response text:', responseText);
+        if (response.status === 204) {
+          throw new Error('No response from server');
+        }
         
         let errorMessage = 'Failed to book appointment';
         try {
-          const errorData = JSON.parse(responseText);
+          const errorData = await response.json();
           errorMessage = errorData.message || errorMessage;
         } catch (e) {
-          // If JSON parsing fails, use the response text if available
-          errorMessage = responseText || response.statusText || errorMessage;
+          // If JSON parsing fails, use the status text
+          errorMessage = response.statusText || errorMessage;
         }
         throw new Error(errorMessage);
       }
 
-      const responseText = await response.text();
-      const responseData = responseText ? JSON.parse(responseText) : null;
-      
+      const responseData = await response.json().catch(() => null);
       if (!responseData) {
         throw new Error('Invalid response from server');
       }
@@ -119,15 +108,6 @@ export default function Booking() {
       });
     } catch (error) {
       console.error('Booking error:', error);
-      
-      // Log additional error details if available
-      if (error instanceof Error) {
-        console.error('Error details:', {
-          message: error.message,
-          stack: error.stack,
-        });
-      }
-
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : 'Failed to book appointment. Please try again.',
