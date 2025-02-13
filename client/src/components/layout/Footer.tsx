@@ -33,6 +33,11 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-gray-300 mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
+                <Link href="/home">
+                  <a className="text-gray-300 hover:underline">Home</a>
+                </Link>
+              </li>
+              <li>
                 <Link href="/services">
                   <a className="text-gray-300 hover:underline">Services</a>
                 </Link>
@@ -45,6 +50,11 @@ export default function Footer() {
               <li>
                 <Link href="/gallery">
                   <a className="text-gray-300 hover:underline">Gallery</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact">
+                  <a className="text-gray-300 hover:underline">Contact</a>
                 </Link>
               </li>
               <li>
