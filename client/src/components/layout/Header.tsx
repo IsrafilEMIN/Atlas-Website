@@ -34,6 +34,14 @@ export default function Header() {
         : "text-gray-300 hover:text-white" // Inactive state
     }`;
 
+  const handleClick = (path: string) => (e: React.MouseEvent) => {
+    if (location === path) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setIsMenuOpen(false); // Close mobile menu if open
+  };
+
   return (
     <motion.header
       style={{ backgroundColor }}
@@ -42,32 +50,32 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto px-6 max-w-6xl flex items-center justify-between relative box-content">
-        <Link href="/" onClick={() => setIsMenuOpen(false)}>
+        <Link href="/" onClick={handleClick("/")}>
           <Logo />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-16">
           <Link href="/">
-            <span className={linkStyle("/")}>Home</span>
+            <span className={linkStyle("/")} onClick={handleClick("/")}>Home</span>
           </Link>
           <Link href="/services">
-            <span className={linkStyle("/services")}>Services</span>
+            <span className={linkStyle("/services")} onClick={handleClick("/services")}>Services</span>
           </Link>
           <Link href="/pricing">
-            <span className={linkStyle("/pricing")}>Pricing</span>
+            <span className={linkStyle("/pricing")} onClick={handleClick("/pricing")}>Pricing</span>
           </Link>
           <Link href="/gallery">
-            <span className={linkStyle("/gallery")}>Gallery</span>
+            <span className={linkStyle("/gallery")} onClick={handleClick("/gallery")}>Gallery</span>
           </Link>
           <Link href="/contact">
-            <span className={linkStyle("/contact")}>Contact</span>
+            <span className={linkStyle("/contact")} onClick={handleClick("/contact")}>Contact</span>
           </Link>
         </nav>
 
         {/* Mobile Navigation */}
         <div className="flex items-center gap-4 md:hidden">
-          <Link href="/booking" onClick={() => setIsMenuOpen(false)}>
+          <Link href="/booking" onClick={handleClick("/booking")}>
             <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black">
               Book Now
             </Button>
@@ -99,19 +107,19 @@ export default function Header() {
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-black border-t border-gray-800 md:hidden">
             <nav className="flex flex-col px-6 py-4">
-              <Link href="/" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/" onClick={handleClick("/")}>
                 <span className={`${linkStyle("/")} block py-2`}>Home</span>
               </Link>
-              <Link href="/services" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/services" onClick={handleClick("/services")}>
                 <span className={`${linkStyle("/services")} block py-2`}>Services</span>
               </Link>
-              <Link href="/pricing" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/pricing" onClick={handleClick("/pricing")}>
                 <span className={`${linkStyle("/pricing")} block py-2`}>Pricing</span>
               </Link>
-              <Link href="/gallery" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/gallery" onClick={handleClick("/gallery")}>
                 <span className={`${linkStyle("/gallery")} block py-2`}>Gallery</span>
               </Link>
-              <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/contact" onClick={handleClick("/contact")}>
                 <span className={`${linkStyle("/contact")} block py-2`}>Contact</span>
               </Link>
             </nav>
@@ -120,7 +128,7 @@ export default function Header() {
 
         {/* Desktop Book Now Button */}
         <div className="hidden md:block">
-          <Link href="/booking">
+          <Link href="/booking" onClick={handleClick("/booking")}>
             <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black">
               Book Now
             </Button>
