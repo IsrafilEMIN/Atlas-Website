@@ -37,24 +37,22 @@ export default function Testimonials() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Function to check screen width
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 768); // Mobile = <768px
     };
 
     checkScreenSize(); // Check initially
-    window.addEventListener("resize", checkScreenSize); // Listen for resizes
+    window.addEventListener("resize", checkScreenSize);
 
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Initialize Embla with conditional draggable setting
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: 'start',
     skipSnaps: false,
-    draggable: isMobile, // Enable drag only on mobile
+    draggable: isMobile, // Enables dragging only on mobile
   });
 
   const scrollPrev = useCallback(() => {
@@ -76,6 +74,15 @@ export default function Testimonials() {
       return () => clearInterval(interval);
     }
   }, [emblaApi]);
+
+  // Disable dragging manually for desktop
+  useEffect(() => {
+    if (emblaApi && !isMobile) {
+      emblaApi.on("pointerDown", (event) => {
+        event.preventDefault();
+      });
+    }
+  }, [emblaApi, isMobile]);
 
   if (!mounted) {
     return null;
@@ -103,7 +110,6 @@ export default function Testimonials() {
         </motion.div>
 
         <div className="relative max-w-6xl mx-auto">
-          {/* Navigation Buttons - Visible on Desktop Only */}
           {!isMobile && (
             <>
               <div className="absolute top-1/2 -translate-y-1/2 left-0 z-10 hidden md:block">
@@ -130,7 +136,10 @@ export default function Testimonials() {
           )}
 
           {/* Embla Carousel */}
-          <div className="overflow-hidden" ref={emblaRef}>
+          <div
+            className={`overflow-hidden ${!isMobile ? 'pointer-events-none select-none' : ''}`} 
+            ref={emblaRef}
+          >
             <div className="flex">
               {testimonials.map((review, index) => (
                 <div
