@@ -43,6 +43,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateNotification(bookingId: number, status: string): Promise<void> {
+    //
     await db
       .update(notifications)
       .set({ status })
