@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertBookingSchema } from "@shared/schema";
 import { z } from "zod";
 import { emailService } from "./services/email";
+import { and, eq, gte } from "drizzle-orm";
 
 export function registerRoutes(app: Express): Server {
   // Booking route
@@ -53,6 +54,23 @@ export function registerRoutes(app: Express): Server {
         success: false, 
         message: 'Failed to create booking' 
       });
+    }
+  });
+
+  // Get available time slots
+  app.get('/api/timeslots', async (req, res) => {
+    try {
+      const date = req.query.date as string;
+      if (!date) {
+        return res.status(400).json({ success: false, message: 'Date is required' });
+      }
+
+      const selectedDate = new Date(date);
+      const slots = await storage.getTimeSlots(selectedDate);
+      res.json({ success: true, slots });
+    } catch (error) {
+      console.error('Error fetching time slots:', error);
+      res.status(500).json({ success: false, message: 'Failed to fetch time slots' });
     }
   });
 

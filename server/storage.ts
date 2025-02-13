@@ -1,9 +1,9 @@
 import { users, type User, type InsertUser, type Booking, type InsertBooking, 
-         type Notification, type InsertNotification, bookings, notifications } from "@shared/schema";
+         type Notification, type InsertNotification, bookings, notifications, timeSlots } from "@shared/schema";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { Pool } from "@neondatabase/serverless";
 import { randomBytes } from 'crypto';
-import { eq } from "drizzle-orm";
+import { eq, and, gte } from "drizzle-orm";
 import { db } from './db';
 
 export interface IStorage {
@@ -13,6 +13,7 @@ export interface IStorage {
   createBooking(booking: InsertBooking): Promise<Booking>;
   createNotification(notification: InsertNotification): Promise<Notification>;
   updateNotification(bookingId: number, status: string): Promise<void>;
+  getTimeSlots(date: Date): Promise<any[]>; // Added time slots query method
 }
 
 export class DatabaseStorage implements IStorage {
@@ -46,6 +47,20 @@ export class DatabaseStorage implements IStorage {
       .update(notifications)
       .set({ status })
       .where(eq(notifications.bookingId, bookingId));
+  }
+
+  async getTimeSlots(date: Date) {
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    return await db.select()
+      .from(timeSlots)
+      .where(
+        and(
+          gte(timeSlots.startTime, startOfDay),
+          eq(timeSlots.isAvailable, true)
+        )
+      );
   }
 }
 
