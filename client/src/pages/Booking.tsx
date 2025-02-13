@@ -60,15 +60,32 @@ export default function Booking() {
         },
         body: JSON.stringify({
           ...data,
-          timeSlotId: 1, // This should be replaced with actual time slot ID from backend
+          bookingDate: bookingDate.toISOString(),
+          timeSlot: timeSlot,
           status: 'pending',
           createdAt: new Date().toISOString(),
         }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to book appointment');
+        if (response.status === 204) {
+          throw new Error('No response from server');
+        }
+        
+        let errorMessage = 'Failed to book appointment';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          // If JSON parsing fails, use the status text
+          errorMessage = response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+
+      const responseData = await response.json().catch(() => null);
+      if (!responseData) {
+        throw new Error('Invalid response from server');
       }
 
       // Reset form
