@@ -53,7 +53,7 @@ export default function Testimonials() {
   const [mounted, setMounted] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
-    align: 'start',
+    align: 'center',
     skipSnaps: false,
     containScroll: 'trimSnaps'
   });
@@ -117,7 +117,7 @@ export default function Testimonials() {
             </Button>
           </div>
 
-          <div className="overflow-hidden px-4 md:px-12" ref={emblaRef}>
+          <div className="overflow-hidden px-4 md:px-24" ref={emblaRef}>
             <div className="flex">
               {testimonials.map((review, index) => (
                 <div
