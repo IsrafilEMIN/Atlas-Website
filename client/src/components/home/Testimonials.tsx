@@ -72,14 +72,6 @@ export default function Testimonials() {
 
   useEffect(() => {
     setMounted(true);
-
-    if (emblaApi) {
-      const interval = setInterval(() => {
-        emblaApi.scrollNext();
-      }, 5000);
-
-      return () => clearInterval(interval);
-    }
   }, [emblaApi]);
 
   if (!mounted) {
