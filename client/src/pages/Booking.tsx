@@ -42,13 +42,11 @@ export default function Booking() {
 
     try {
       // Convert date and timeSlot to a proper timestamp for the backend
-      const [time, period] = timeSlot.split(' ');
-      const [hours, minutes] = time.split(':');
+      const [hours, minutes] = timeSlot.split(':')[0].split(' ')[0].split(':');
+      const isPM = timeSlot.includes('PM');
       let hour = parseInt(hours);
-      
-      // Convert to 24-hour format
-      if (period === 'PM' && hour !== 12) hour += 12;
-      if (period === 'AM' && hour === 12) hour = 0;
+      if (isPM && hour !== 12) hour += 12;
+      if (!isPM && hour === 12) hour = 0;
 
       const bookingDate = new Date(date);
       bookingDate.setHours(hour);
@@ -61,25 +59,15 @@ export default function Booking() {
         },
         body: JSON.stringify({
           ...data,
-          bookingDateTime: bookingDate.toISOString(),
-          timeSlotId: 1,
-          status: 'pending'
+          timeSlotId: 1, // This should be replaced with actual time slot ID from backend
+          status: 'pending',
+          createdAt: new Date().toISOString(),
         }),
       });
 
-      // Log the raw response for debugging
-      const responseText = await response.text();
-      console.log('Raw response:', responseText);
-
       if (!response.ok) {
-        let errorMessage = 'Failed to book appointment';
-        try {
-          const errorData = JSON.parse(responseText);
-          errorMessage = errorData.message || errorMessage;
-        } catch (e) {
-          console.error('Error parsing response:', e);
-        }
-        throw new Error(errorMessage);
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to book appointment');
       }
 
       // Reset form
