@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import useEmblaCarousel from 'embla-carousel-react';
@@ -52,13 +51,10 @@ const testimonials = [
 
 export default function Testimonials() {
   const [mounted, setMounted] = useState(false);
-  const isMobile = useIsMobile();
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     loop: true,
     align: 'start',
     skipSnaps: false,
-    dragFree: isMobile,
-    draggable: isMobile,
     containScroll: 'trimSnaps'
   });
 
