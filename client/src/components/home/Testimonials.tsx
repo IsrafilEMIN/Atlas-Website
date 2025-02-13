@@ -82,8 +82,8 @@ export default function Testimonials() {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Real experiences from our valued customers
           </p>
-          <Link href="/contact" className="text-black hover:underline mt-2 inline-block">
-            Get in touch →
+          <Link href="/reviews" className="text-black hover:underline mt-2 inline-block">
+            See all reviews →
           </Link>
         </motion.div>
 
