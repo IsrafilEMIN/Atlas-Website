@@ -56,26 +56,16 @@ export default function Booking() {
 
     try {
       // Convert date and timeSlot to a proper timestamp
-      const timeComponents = timeSlot?.split(' ') ?? []; // e.g., ["9:00", "AM"]
-      const [hours = 0, minutes = 0] = (timeComponents[0]?.split(':') ?? []).map(Number);
-      const isPM = timeComponents[1] === 'PM';
-      
-      let hour = hours;
+      const [hours, minutes] = timeSlot.split(':')[0].split(' ')[0].split(':');
+      const isPM = timeSlot.includes('PM');
+      let hour = parseInt(hours);
       if (isPM && hour !== 12) hour += 12;
       if (!isPM && hour === 12) hour = 0;
 
       const bookingDate = new Date(date);
-      if (isNaN(bookingDate.getTime())) {
-        throw new Error('Invalid date selected');
-      }
-
       bookingDate.setHours(hour);
-      bookingDate.setMinutes(minutes);
+      bookingDate.setMinutes(parseInt(minutes));
 
-      if (isNaN(bookingDate.getTime())) {
-        throw new Error('Invalid date/time combination');
-      }
-      
       // Use the API route that matches your Vercel deployment
       const response = await fetch('/api/bookings', {
         method: 'POST',
