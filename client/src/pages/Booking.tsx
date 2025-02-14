@@ -77,8 +77,7 @@ export default function Booking() {
       }
       
       // Use the API route that matches your Vercel deployment
-      const API_URL = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${API_URL}/api/bookings`, {
+      const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,22 +91,14 @@ export default function Booking() {
       });
 
       if (!response.ok) {
-        let errorMessage = 'Failed to book appointment';
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch {
-          // If JSON parsing fails, use default error message
-        }
-        throw new Error(errorMessage);
+        const errorData = await response.json()
+          .catch(() => ({ message: 'Failed to parse error response' }));
+        throw new Error(errorData.message || 'Failed to book appointment');
       }
 
-      let responseData;
-      try {
-        responseData = await response.json();
-      } catch (error) {
-        console.error('Failed to parse success response:', error);
-      }
+      // Store response for future use
+      const responseData = await response.json()
+        .catch(() => ({ message: 'Failed to parse success response' }));
 
       // Reset form
       form.reset();
