@@ -91,7 +91,7 @@ export default function Booking() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to book appointment');
       }
 
