@@ -11,20 +11,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { insertBookingSchema } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 
-// Add these type definitions
-type BookingFormData = {
-  customerName: string;
-  customerEmail: string;
-  customerPhone: string;
-  serviceType: string;
-  projectDetails: string;
-  timeSlotId: number;
-};
-
-type CaptionProps = {
-  displayMonth: Date;
-};
-
 export default function Booking() {
   const [date, setDate] = useState<Date>();
   const [timeSlot, setTimeSlot] = useState<string>();
@@ -32,7 +18,7 @@ export default function Booking() {
   const currentYear = new Date().getFullYear();
   const { toast } = useToast();
 
-  const form = useForm<BookingFormData>({
+  const form = useForm({
     resolver: zodResolver(insertBookingSchema),
     defaultValues: {
       customerName: "",
@@ -40,11 +26,11 @@ export default function Booking() {
       customerPhone: "",
       serviceType: "",
       projectDetails: "",
-      timeSlotId: 0,
+      timeSlotId: 0, // This will be set based on date and timeSlot
     },
   });
 
-  const onSubmit = async (data: BookingFormData) => {
+  const onSubmit = async (data: any) => {
     if (!date || !timeSlot) {
       toast({
         title: "Error",
@@ -55,7 +41,7 @@ export default function Booking() {
     }
 
     try {
-      // Convert date and timeSlot to a proper timestamp
+      // Convert date and timeSlot to a proper timestamp for the backend
       const [hours, minutes] = timeSlot.split(':')[0].split(' ')[0].split(':');
       const isPM = timeSlot.includes('PM');
       let hour = parseInt(hours);
@@ -66,7 +52,6 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      // Use the API route that matches your Vercel deployment
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
@@ -74,7 +59,7 @@ export default function Booking() {
         },
         body: JSON.stringify({
           ...data,
-          bookingDate: bookingDate.toISOString(),
+          timeSlotId: 1, // This should be replaced with actual time slot ID from backend
           status: 'pending',
           createdAt: new Date().toISOString(),
         }),
@@ -109,37 +94,6 @@ export default function Booking() {
     newDate.setFullYear(year);
     setDate(newDate);
     setIsYearSelectOpen(false);
-  };
-
-  // Update the Caption component with proper typing
-  const Caption = ({ displayMonth }: CaptionProps) => {
-    const year = displayMonth.getFullYear();
-    const month = displayMonth.toLocaleString('default', { month: 'long' });
-
-    return (
-      <div className="flex justify-center items-center space-x-2">
-        <span className="text-black font-semibold">{month}</span>
-        <span 
-          className="text-black font-semibold cursor-pointer"
-          onClick={() => setIsYearSelectOpen(!isYearSelectOpen)}
-        >
-          {year}
-        </span>
-        {isYearSelectOpen && (
-          <div className="absolute top-8 bg-white border border-gray-200 rounded-md shadow-lg p-2 z-50">
-            {Array.from({ length: 5 }, (_, i) => currentYear + i).map((y) => (
-              <div
-                key={y}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
-                onClick={() => handleYearSelect(y)}
-              >
-                {y}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
   };
 
   return (
@@ -197,7 +151,35 @@ export default function Booking() {
                   dropdown_icon: "ml-1 h-4 w-4"
                 }}
                 components={{
-                  Caption: Caption
+                  Caption: ({ displayMonth }) => {
+                    const year = displayMonth.getFullYear();
+                    const month = displayMonth.toLocaleString('default', { month: 'long' });
+
+                    return (
+                      <div className="flex justify-center items-center space-x-2">
+                        <span className="text-black font-semibold">{month}</span>
+                        <span 
+                          className="text-black font-semibold cursor-pointer"
+                          onClick={() => setIsYearSelectOpen(!isYearSelectOpen)}
+                        >
+                          {year}
+                        </span>
+                        {isYearSelectOpen && (
+                          <div className="absolute top-8 bg-white border border-gray-200 rounded-md shadow-lg p-2 z-50">
+                            {Array.from({ length: 5 }, (_, i) => currentYear + i).map((y) => (
+                              <div
+                                key={y}
+                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
+                                onClick={() => handleYearSelect(y)}
+                              >
+                                {y}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
                 }}
               />
 
