@@ -91,9 +91,14 @@ export default function Booking() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        const errorData = await response.json()
+          .catch(() => ({ message: 'Failed to parse error response' }));
         throw new Error(errorData.message || 'Failed to book appointment');
       }
+
+      // Store response for future use
+      const responseData = await response.json()
+        .catch(() => ({ message: 'Failed to parse success response' }));
 
       // Reset form
       form.reset();
