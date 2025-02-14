@@ -1,10 +1,13 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { bookingsRouter } from "./routes/bookings";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/api/bookings", bookingsRouter);
 
 app.use((req, res, next) => {
   const start = Date.now();
