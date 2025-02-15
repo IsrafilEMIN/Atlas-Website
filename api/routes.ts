@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertBookingSchema } from "@shared/schema";
 import { z } from "zod";
-import { emailService } from "./services/email";
+import { emailService } from "./api/resendEmailNoti/email";
 
 export function registerRoutes(app: Express): Server {
   // Booking route
