@@ -7,20 +7,28 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 //   - Returns a success/error response
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Accept only POST (and optionally OPTIONS for CORS preflight).
+  if (req.method === "OPTIONS") {
+    // Respond to preflight
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return res.status(200).end();
+  }
+
+// Accept only POST (and optionally OPTIONS for CORS preflight).
   if (req.method === "POST") {
     try {
       const {
         serviceType,
-        fullName,
-        email,
-        phone,
+        customerName,
+        customerEmail,
+        customerPhone,
         projectDetails,
-        dateTime, // e.g., "2025-02-15T10:00" or something similar
+        timeSlotId, // e.g., "2025-02-15T10:00" or something similar
       } = req.body;
 
       // --- 1) Validate fields (simple example) ---
-      if (!serviceType || !fullName || !email || !dateTime) {
+      if (!serviceType || !customerName || !customerEmail || !timeSlotId) {
         return res.status(400).json({
           error: "Missing required fields",
         });
@@ -51,11 +59,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         message: "Consultation booked successfully!",
         data: {
           serviceType,
-          fullName,
-          email,
-          phone,
+          customerName,
+          customerEmail,
+          customerPhone,
           projectDetails,
-          dateTime
+          timeSlotId
         }
       });
     } catch (err: any) {
