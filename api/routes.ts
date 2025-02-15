@@ -3,11 +3,11 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertBookingSchema } from "@shared/schema";
 import { z } from "zod";
-import { emailService } from "./services/email";
+import { emailService } from "@api/resendEmailNoti/email";
 
 export function registerRoutes(app: Express): Server {
   // Booking route
-  app.post('/api/bookings', async (req, res) => {
+  app.post('/api/bookings/booking', async (req, res) => {
     try {
       // Validate request body
       const validatedData = insertBookingSchema.parse(req.body);
