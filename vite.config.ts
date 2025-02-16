@@ -18,12 +18,11 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: 'dist/public',
     rollupOptions: {
       input: {
         // Include your API files
-        main: path.resolve(__dirname, 'index.html'),
-        api: path.resolve(__dirname, 'api/index.ts'),
+        main: path.resolve(__dirname, 'index.html')
       },
     },
   },
