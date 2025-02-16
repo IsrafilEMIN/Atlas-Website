@@ -52,7 +52,7 @@ export default function Booking() {
       bookingDate.setHours(hour);
       bookingDate.setMinutes(parseInt(minutes));
 
-      const response = await fetch('/api/booking/bookings', {
+      const response = await fetch('/api/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
