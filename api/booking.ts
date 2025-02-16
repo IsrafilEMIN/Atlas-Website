@@ -11,6 +11,12 @@ type BookingData = {
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+    if (req.method === 'OPTIONS') {
+        res.setHeader('Access-Control-Allow-Methods', 'POST');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        return res.status(200).end();
+      }
+
   // Only allow POST requests
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
