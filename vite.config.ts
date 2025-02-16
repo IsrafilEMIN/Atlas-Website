@@ -18,7 +18,13 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
-    emptyOutDir: true,
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        // Include your API files
+        main: path.resolve(__dirname, 'index.html'),
+        api: path.resolve(__dirname, 'api/index.ts'),
+      },
+    },
   },
 });
