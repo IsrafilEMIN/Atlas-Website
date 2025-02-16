@@ -5,15 +5,15 @@
   "framework": null,
   "outputDirectory": "dist/public",
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
+  {
+    "source": "/api/(.*)",
+    "destination": "/api/$1"
+  },
+  {
+    "source": "/((?!api).*)",
+    "destination": "/index.html"
+  }
+],
   "env": {
     "NODE_ENV": "production",
     "GIT_AUTHOR_NAME": "Vercel Bot",
