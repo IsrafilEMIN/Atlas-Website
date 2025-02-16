@@ -10,10 +10,12 @@ type BookingData = {
   date: string; // expected in ISO or datetime-local format
 };
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default function handler(req: VercelRequest, res: VercelResponse) {
+    res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    
     if (req.method === 'OPTIONS') {
-        res.setHeader('Access-Control-Allow-Methods', 'POST');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
         return res.status(200).end();
       }
 
@@ -51,7 +53,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     // Return success response
-    return res.status(200).json({
+    return res.status(200).json({ success: true,
       message: 'Booking received successfully',
       booking: { customerName, customerEmail, customerPhone, serviceType, projectDetails, date },
     });
